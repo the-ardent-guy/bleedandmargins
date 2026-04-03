@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kutty Jetty — Bleed & Margins</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,800;0,900;1,700;1,800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+:root{--ink:#1a1510;--paper:#f7f2e8;--off:#f0e8d8;--dim:#e8dfc8;--muted:#8a7d6a;--border:rgba(26,21,16,0.15);--accent:#c9f04b;}
+body{background:var(--paper);color:var(--ink);font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;background-image:linear-gradient(rgba(26,21,16,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(26,21,16,0.04) 1px,transparent 1px);background-size:80px 80px,80px 80px;}
+body::after{content:'';position:fixed;inset:0;z-index:9990;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.035;pointer-events:none;mix-blend-mode:multiply;}
+.cursor-dot{position:fixed;z-index:9999;width:10px;height:10px;background:var(--ink);border-radius:0;pointer-events:none;transform:translate(-50%,-50%);}
+.cursor-ring{position:fixed;z-index:9998;width:32px;height:32px;border:1.5px solid var(--ink);border-radius:0;pointer-events:none;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s;opacity:0.4;}
+body:has(a:hover) .cursor-ring{width:48px;height:48px;opacity:1;}
+.crop{position:fixed;inset:0;z-index:9980;pointer-events:none;}
+.crop::before,.crop::after{display:none;}
+.crop span::before,.crop span::after{content:'';position:absolute;background:rgba(26,21,16,0.5);}
+.crop span:first-child::before,.crop span:first-child::after{display:none;}
+.crop span:last-child::before{bottom:20px;left:6px;width:28px;height:2px;}
+.crop span:last-child::after{bottom:6px;left:20px;width:2px;height:28px;}
+.crop-br-h{position:fixed;bottom:20px;right:6px;width:28px;height:2px;background:rgba(26,21,16,0.5);z-index:9981;pointer-events:none;}
+.crop-br-v{position:fixed;bottom:6px;right:20px;width:2px;height:28px;background:rgba(26,21,16,0.5);z-index:9981;pointer-events:none;}
+.hl{background:linear-gradient(104deg,transparent 0%,rgba(201,240,75,0) 1%,rgba(201,240,75,0.42) 2.5%,rgba(201,240,75,0.38) 96%,rgba(201,240,75,0) 99%,transparent 100%);padding:0.04em 0.3em;margin:0 -0.08em;-webkit-box-decoration-break:clone;box-decoration-break:clone;}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:stretch;border-bottom:1px solid var(--ink);background:var(--paper);height:64px;}
+.nav-wordmark{text-decoration:none;display:flex;flex-direction:column;justify-content:center;line-height:1;gap:0;padding:0 24px;border-right:1px solid var(--ink);min-width:140px;}
+.nav-wordmark .wm-top{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;color:var(--ink);line-height:1.05;}
+.nav-wordmark .wm-bot{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--ink);letter-spacing:0.22em;text-transform:uppercase;line-height:1;}
+.nav-back{display:flex;align-items:center;padding:0 28px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--ink);opacity:0.45;transition:opacity .15s;border-right:1px solid var(--ink);}
+.nav-back:hover{opacity:1;}
+.nav-cta{margin-left:auto;display:flex;align-items:center;padding:0 28px;border-left:1px solid var(--ink);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;color:var(--ink);transition:background .15s,color .15s;white-space:nowrap;}
+.nav-cta:hover{background:var(--ink);color:var(--paper);}
+.cs-hero{margin-top:64px;min-height:92vh;background:#000;display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--ink);}
+.cs-hero-left{padding:80px 72px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid rgba(247,242,232,0.08);}
+.cs-eyebrow{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(247,242,232,0.3);margin-bottom:32px;}
+.cs-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(56px,8vw,128px);line-height:0.85;text-transform:uppercase;letter-spacing:-0.02em;color:#fff;flex:1;display:flex;align-items:center;}
+.cs-hero-meta{padding-top:48px;border-top:1px solid rgba(247,242,232,0.08);}
+.cs-tags{display:flex;gap:8px;flex-wrap:wrap;}
+.cs-tag{font-size:8px;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(247,242,232,0.15);padding:5px 11px;color:rgba(247,242,232,0.4);}
+.cs-tag.accent{background:var(--accent);border-color:var(--accent);color:var(--ink);}
+.cs-hero-right{padding:80px 72px;display:flex;flex-direction:column;justify-content:flex-end;}
+.cs-opening-line{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(20px,2.6vw,36px);line-height:1.4;color:rgba(247,242,232,0.8);max-width:480px;margin-bottom:48px;}
+.cs-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(247,242,232,0.08);}
+.cs-stat{background:#000;padding:28px 24px;}
+.cs-stat-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(28px,3.5vw,48px);color:var(--accent);line-height:1;letter-spacing:-0.02em;display:block;margin-bottom:4px;}
+.cs-stat-label{font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(247,242,232,0.3);}
+.field-section{border-bottom:1px solid var(--ink);}
+.section-header{padding:80px 72px 52px;border-bottom:1px solid var(--ink);display:flex;align-items:baseline;gap:24px;flex-wrap:wrap;}
+.section-header h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(44px,6vw,88px);text-transform:uppercase;line-height:0.88;letter-spacing:-0.01em;}
+.sl{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
+.field-intro{padding:64px 72px;border-bottom:1px solid var(--ink);}
+.field-intro p{font-family:'Instrument Serif',serif;font-size:clamp(17px,1.8vw,22px);line-height:1.7;color:rgba(26,21,16,0.75);max-width:820px;}
+.field-finds{display:grid;grid-template-columns:repeat(3,1fr);}
+.field-find{padding:64px 52px;border-right:1px solid var(--ink);}
+.field-find:last-child{border-right:none;}
+.find-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:72px;color:rgba(26,21,16,0.05);line-height:1;display:block;margin-bottom:12px;}
+.find-stat{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(24px,2.6vw,40px);text-transform:uppercase;line-height:0.92;letter-spacing:-0.01em;margin-bottom:16px;display:block;}
+.find-desc{font-family:'Instrument Serif',serif;font-size:15px;line-height:1.7;color:var(--muted);}
+.brief-insight{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--ink);}
+.brief-col{padding:72px;border-right:1px solid var(--ink);}
+.insight-col{background:#000;padding:72px;}
+.col-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:28px;display:block;}
+.insight-col .col-label{color:rgba(247,242,232,0.3);}
+.col-heading{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(28px,3vw,44px);text-transform:uppercase;letter-spacing:-0.01em;line-height:0.92;margin-bottom:24px;}
+.insight-col .col-heading{color:#fff;}
+.col-body{font-family:'Instrument Serif',serif;font-size:16px;line-height:1.75;color:rgba(26,21,16,0.72);}
+.insight-col .col-body{color:rgba(247,242,232,0.6);}
+.col-body p+p{margin-top:16px;}
+.insight-pull{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(28px,3.2vw,48px);text-transform:uppercase;line-height:0.9;letter-spacing:-0.01em;color:var(--accent);margin-top:40px;border-top:1px solid rgba(247,242,232,0.1);padding-top:32px;}
+.work-section{border-bottom:1px solid var(--ink);}
+.deliverable{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--ink);min-height:500px;}
+.deliverable.flip .del-visual{order:-1;}
+.del-visual{position:relative;overflow:hidden;background:#000;}
+.del-visual img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease;}
+.deliverable:hover .del-visual img{transform:scale(1.02);}
+.del-vborder{position:absolute;inset:0;border-right:1px solid var(--ink);pointer-events:none;z-index:2;}
+.deliverable.flip .del-vborder{border-right:none;border-left:1px solid var(--ink);}
+.del-info{padding:72px;display:flex;flex-direction:column;justify-content:center;gap:20px;background:var(--paper);}
+.del-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:64px;color:rgba(26,21,16,0.05);line-height:1;display:block;margin-bottom:-8px;}
+.del-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(32px,3.8vw,56px);text-transform:uppercase;line-height:0.9;letter-spacing:-0.01em;}
+.del-desc{font-family:'Instrument Serif',serif;font-size:16px;line-height:1.75;color:var(--muted);max-width:420px;}
+.del-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.del-tag{font-size:8px;letter-spacing:0.12em;text-transform:uppercase;border:1px solid var(--border);padding:4px 9px;color:var(--muted);}
+.results-section{background:#000;border-bottom:1px solid rgba(247,242,232,0.08);}
+.results-header{padding:80px 72px 52px;border-bottom:1px solid rgba(247,242,232,0.08);}
+.results-header h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(44px,6vw,88px);text-transform:uppercase;line-height:0.88;letter-spacing:-0.01em;color:#fff;}
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+.result-block{padding:64px 48px;border-right:1px solid rgba(247,242,232,0.08);}
+.result-block:last-child{border-right:none;}
+.result-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(44px,5vw,76px);color:var(--accent);line-height:0.88;letter-spacing:-0.02em;display:block;margin-bottom:8px;}
+.result-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(247,242,232,0.3);display:block;margin-bottom:12px;}
+.result-desc{font-family:'Instrument Serif',serif;font-size:15px;line-height:1.65;color:rgba(247,242,232,0.45);}
+.next-project{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--ink);}
+.next-label-col{padding:88px 72px;border-right:1px solid var(--ink);display:flex;align-items:flex-end;}
+.next-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
+.next-link-col{padding:88px 72px;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;transition:background .2s;text-decoration:none;color:var(--ink);}
+.next-link-col:hover{background:var(--dim);}
+.next-project-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(48px,7vw,100px);text-transform:uppercase;line-height:0.88;letter-spacing:-0.01em;}
+.next-project-sub{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;color:var(--muted);}
+.next-arrow{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;letter-spacing:0.1em;text-transform:uppercase;margin-top:8px;}
+footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
+.footer-col{padding:40px;border-right:1px solid rgba(247,242,232,0.1);display:flex;flex-direction:column;justify-content:space-between;}
+.footer-col:last-child{border-right:none;}
+.footer-wordmark{text-decoration:none;display:flex;flex-direction:column;line-height:1;gap:1px;}
+.footer-wordmark .wm-top{font-family:'Instrument Serif',serif;font-style:italic;font-size:20px;color:rgba(247,242,232,0.6);line-height:1.05;}
+.footer-wordmark .wm-bot{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:rgba(247,242,232,0.9);text-transform:uppercase;letter-spacing:0.22em;}
+.footer-copy{font-size:9px;color:rgba(247,242,232,0.22);letter-spacing:0.1em;margin-top:32px;}
+.footer-label{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(247,242,232,0.2);margin-bottom:20px;}
+.footer-links{display:flex;flex-direction:column;gap:12px;list-style:none;}
+.footer-links a{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(247,242,232,0.38);text-decoration:none;transition:color .15s;}
+.footer-links a:hover{color:var(--accent);}
+.footer-contact a{display:block;font-family:'DM Mono',monospace;font-size:11px;color:rgba(247,242,232,0.45);text-decoration:none;transition:color .15s;margin-bottom:10px;}
+.footer-contact a:hover{color:var(--accent);}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.06s;}.d2{transition-delay:.12s;}.d3{transition-delay:.18s;}.d4{transition-delay:.24s;}
+@media(max-width:900px){
+  .cs-hero,.brief-insight,.deliverable,.next-project{grid-template-columns:1fr;}
+  .deliverable.flip .del-visual{order:0;}
+  .del-visual{min-height:300px;}
+  .field-finds{grid-template-columns:1fr;}
+  .field-find{border-right:none;border-bottom:1px solid var(--ink);}
+  .field-find:last-child{border-bottom:none;}
+  .results-grid{grid-template-columns:1fr 1fr;}
+  .result-block:nth-child(2){border-right:none;}
+  .result-block:last-child{border-top:1px solid rgba(247,242,232,0.08);grid-column:1/-1;}
+  footer{grid-template-columns:1fr;}
+  .footer-col{border-right:none;border-bottom:1px solid rgba(247,242,232,0.1);}
+}
+@media(max-width:768px){
+  .nav-back,.nav-cta{padding:0 16px;}
+  .nav-wordmark{padding:0 16px;min-width:auto;}
+  .cs-hero-left,.cs-hero-right{padding:48px 24px;}
+  .section-header,.results-header{padding:48px 24px 32px;}
+  .field-intro{padding:40px 24px;}
+  .field-find,.brief-col,.insight-col,.del-info{padding:48px 24px;}
+  .next-label-col,.next-link-col{padding:56px 24px;}
+  footer .footer-col{padding:32px 24px;}
+}
+
+/* ══ MOBILE FIXES ══ */
+
+/* Hide custom cursor on touch devices */
+@media (hover: none), (pointer: coarse) {
+  body { cursor: auto !important; }
+  .cursor-dot, .cursor-ring { display: none !important; }
+  a, button { cursor: pointer !important; }
+}
+
+/* ── NAV mobile ── */
+@media (max-width: 768px) {
+  nav { height: 52px; }
+  .nav-wordmark { min-width: auto; padding: 0 16px; }
+  .nav-links { display: none; }
+  .nav-back { padding: 0 16px; font-size: 11px; }
+  .nav-cta { padding: 0 16px; font-size: 11px; }
+}
+
+/* ── HERO — index ── */
+@media (max-width: 768px) {
+  #hero { grid-template-columns: 1fr; margin-top: 52px; }
+  .hero-left { padding: 48px 24px 40px; }
+  .hero-right { min-height: 50vw; }
+  .hero-eyebrow { margin-bottom: 32px; }
+  .hero-headline { font-size: clamp(52px, 13vw, 80px); }
+  .hero-bottom { flex-direction: column; align-items: flex-start; gap: 24px; margin-top: 32px; }
+  .hero-desc { max-width: 100%; font-size: 15px; }
+}
+
+/* ── CASE STUDY HERO ── */
+@media (max-width: 768px) {
+  .cs-hero { grid-template-columns: 1fr; margin-top: 52px; }
+  .cs-hero-left { padding: 48px 24px 40px; }
+  .cs-hero-right { padding: 40px 24px 48px; }
+  .cs-title { font-size: clamp(64px, 16vw, 100px); }
+  .cs-opening-line { font-size: clamp(18px, 5vw, 26px); margin-bottom: 32px; }
+  .cs-stats { grid-template-columns: 1fr 1fr; }
+  .cs-stat-num { font-size: clamp(24px, 6vw, 40px); }
+}
+
+/* ── PAGE HEADER — work.html ── */
+@media (max-width: 768px) {
+  .page-header { grid-template-columns: 1fr; margin-top: 52px; }
+  .ph-left { padding: 48px 24px 40px; }
+  .ph-right { padding: 40px 24px 48px; }
+  .ph-title { font-size: clamp(56px, 14vw, 88px); }
+  .ph-count { font-size: 36px; }
+}
+
+/* ── SECTIONS ── */
+@media (max-width: 768px) {
+  .section-header { padding: 48px 24px 32px; flex-wrap: wrap; gap: 8px; }
+  .section-header h2 { font-size: clamp(36px, 10vw, 60px); }
+  .field-intro { padding: 40px 24px; }
+  .field-finds { grid-template-columns: 1fr; }
+  .field-find { padding: 40px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+  .field-find:last-child { border-bottom: none; }
+}
+
+/* ── BRIEF & INSIGHT ── */
+@media (max-width: 768px) {
+  .brief-insight { grid-template-columns: 1fr; }
+  .brief-col { padding: 48px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+  .insight-col { padding: 48px 24px; }
+  .col-heading { font-size: clamp(24px, 7vw, 36px); }
+  .insight-pull { font-size: clamp(24px, 7vw, 36px); }
+}
+
+/* ── WORK DELIVERABLES ── */
+@media (max-width: 768px) {
+  .work-section-header { padding: 48px 24px 32px; }
+  .deliverable { grid-template-columns: 1fr; }
+  .deliverable.flip .del-visual { order: 0; }
+  .del-visual { min-height: 60vw; }
+  .del-info { padding: 40px 24px; }
+  .del-title { font-size: clamp(28px, 8vw, 44px); }
+  .del-desc { font-size: 15px; }
+  .del-vborder { border-right: none !important; border-left: none !important; border-bottom: 1px solid var(--border); }
+}
+
+/* ── RESULTS ── */
+@media (max-width: 768px) {
+  .results-header { padding: 48px 24px 32px; }
+  .results-header h2 { font-size: clamp(36px, 10vw, 60px); }
+  .results-grid { grid-template-columns: 1fr; }
+  .result-block { border-right: none !important; border-bottom: 1px solid rgba(247,242,232,0.1); padding: 40px 24px; }
+  .result-block:last-child { border-bottom: none; }
+  .result-num { font-size: clamp(36px, 10vw, 56px); }
+}
+
+/* ── APPROACH ── */
+@media (max-width: 768px) {
+  .approach-header { padding: 56px 24px 40px; }
+  .approach-header h2 { font-size: clamp(40px, 11vw, 72px); }
+  .approach-steps { grid-template-columns: 1fr; }
+  .approach-step { border-right: none; border-bottom: 1px solid rgba(247,242,232,0.1); padding: 40px 24px; }
+  .approach-step:last-child { border-bottom: none; }
+  .approach-body-row { padding: 40px 24px; flex-direction: column; align-items: flex-start; gap: 24px; }
+  .approach-body-text { font-size: 15px; }
+}
+
+/* ── TESTIMONIALS ── */
+@media (max-width: 768px) {
+  .testimonial-grid, .testimonial-track { flex-direction: column; display: flex; }
+  .testimonial-card { border-right: none; border-bottom: 1px solid var(--border); padding: 40px 24px; }
+  .testimonial-card:last-child { border-bottom: none; }
+}
+
+/* ── CONTACT ── */
+@media (max-width: 768px) {
+  .contact-header { padding: 56px 24px 40px; }
+  .contact-header h2 { font-size: clamp(40px, 11vw, 72px); }
+  .contact-body { grid-template-columns: 1fr; }
+  .contact-info { padding: 40px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+  .contact-form-wrap { padding: 40px 24px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* ── SERVICES ── */
+@media (max-width: 768px) {
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .service-card { padding: 32px 20px 40px; }
+  .service-card:nth-child(odd) { border-right: 1px solid var(--border); }
+  .service-card:nth-child(even) { border-right: none; }
+}
+@media (max-width: 480px) {
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card { border-right: none !important; }
+  .cs-stats { grid-template-columns: 1fr; }
+}
+
+/* ── WORK GRID ── */
+@media (max-width: 768px) {
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card { border-right: none; min-height: 80vw; }
+  .proj-content { padding: 28px 20px; }
+  .proj-title { font-size: clamp(32px, 9vw, 52px); }
+  .work-header-row { padding: 48px 24px 32px; flex-direction: column; gap: 12px; }
+  .work-header-row h2 { font-size: clamp(40px, 11vw, 64px); }
+  .filter-bar { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+  .filter-btn { white-space: nowrap; flex-shrink: 0; }
+}
+
+/* ── CASE STUDY work section ── */
+@media (max-width: 768px) {
+  .case-study { grid-template-columns: 1fr; min-height: auto; }
+  .case-study:nth-child(even) .case-visual { order: 0; }
+  .case-visual { min-height: 60vw; }
+  .case-info { padding: 40px 24px; }
+  .case-title { font-size: clamp(36px, 10vw, 56px); }
+  .case-sub { font-size: 14px; }
+  .case-metric-val { font-size: 14px; }
+  .work-header { padding: 48px 24px 32px; flex-direction: column; gap: 10px; }
+  .work-footer { padding: 48px 24px; }
+}
+
+/* ── NEXT PROJECT ── */
+@media (max-width: 768px) {
+  .next-project { grid-template-columns: 1fr; }
+  .next-label-col { padding: 32px 24px 16px; border-right: none; border-bottom: 1px solid var(--border); }
+  .next-link-col { padding: 32px 24px 48px; }
+  .next-project-title { font-size: clamp(40px, 11vw, 64px); }
+}
+
+/* ── BOTTOM STRIP — work.html ── */
+@media (max-width: 768px) {
+  .bottom-strip { grid-template-columns: 1fr; }
+  .bs-left { padding: 48px 24px; border-right: none; border-bottom: 1px solid rgba(247,242,232,0.08); }
+  .bs-right { padding: 40px 24px; gap: 32px; }
+  .bs-heading { font-size: clamp(32px, 9vw, 52px); }
+}
+
+/* ── FOOTER ── */
+@media (max-width: 768px) {
+  footer { grid-template-columns: 1fr; }
+  .footer-col { border-right: none; border-bottom: 1px solid rgba(247,242,232,0.1); padding: 32px 24px; }
+  .footer-col:last-child { border-bottom: none; }
+}
+
+/* ── QUOTE SECTION ── */
+@media (max-width: 768px) {
+  .quote-section { padding: 56px 24px; }
+  .quote-text { font-size: clamp(18px, 5vw, 26px); }
+  .quote-mark { font-size: 80px; }
+}
+
+/* ── GENERAL TYPOGRAPHY SCALE ── */
+@media (max-width: 480px) {
+  .hero-headline { font-size: clamp(44px, 13vw, 64px); }
+  .cs-title { font-size: clamp(56px, 14vw, 80px); }
+  .section-header h2 { font-size: clamp(32px, 10vw, 52px); }
+  .col-heading { font-size: clamp(22px, 7vw, 32px); }
+  .del-title { font-size: clamp(26px, 8vw, 38px); }
+}
+
+/* ── PREVENT HORIZONTAL OVERFLOW ── */
+* { max-width: 100%; }
+img, svg { max-width: 100%; height: auto; }
+pre, code { overflow-x: auto; }
+
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cd"></div>
+<div class="cursor-ring" id="cr"></div>
+<div class="crop"><span></span><span></span></div>
+<div class="crop-br-h"></div><div class="crop-br-v"></div>
+
+<nav>
+  <a href="index.html" class="nav-wordmark">
+    <span class="wm-top">Bleed &</span>
+    <span class="wm-bot">Margins</span>
+  </a>
+  <a href="work.html" class="nav-back">← Work</a>
+  <a href="index.html#contact" class="nav-cta">Get in Touch</a>
+</nav>
+
+<!-- HERO — warm, vibrant, distinctly South Indian -->
+<div class="cs-hero" style="background:linear-gradient(160deg,#1a0a0a,#2d0f14,#420a1a);">
+  <div class="cs-hero-left" style="border-right:1px solid rgba(247,242,232,0.08);">
+    <div>
+      <p class="cs-eyebrow">Case Study · Branding & Shopify · South Indian Kidswear · India</p>
+      <div class="cs-title">Kutty<br/>Jetty.</div>
+    </div>
+    <div class="cs-hero-meta">
+      <div class="cs-tags">
+        <span class="cs-tag accent">Branding</span>
+        <span class="cs-tag accent">Shopify</span>
+        <span class="cs-tag">Colour Research</span>
+        <span class="cs-tag">Kids Fashion</span>
+        <span class="cs-tag">South Indian Identity</span>
+      </div>
+    </div>
+  </div>
+  <div class="cs-hero-right">
+    <p class="cs-opening-line reveal">"Every other kidswear brand was talking to parents. We made something the kutti's themselves would actually want to wear."</p>
+    <div class="cs-stats">
+      <div class="cs-stat reveal d1" style="background:rgba(66,10,26,0.6);">
+        <span class="cs-stat-num">குட்டி</span>
+        <span class="cs-stat-label">Tamil for little one — the name is the identity</span>
+      </div>
+      <div class="cs-stat reveal d2" style="background:rgba(66,10,26,0.6);">
+        <span class="cs-stat-num">South</span>
+        <span class="cs-stat-label">Indian mill cotton — Tirupur export-quality, pre-washed, breathable</span>
+      </div>
+      <div class="cs-stat reveal d3" style="background:rgba(66,10,26,0.6);">
+        <span class="cs-stat-num">Unisex</span>
+        <span class="cs-stat-label">Fits — not pink vs blue, just good clothes for all kuttis</span>
+      </div>
+      <div class="cs-stat reveal d4" style="background:rgba(66,10,26,0.6);">
+        <span class="cs-stat-num">Live</span>
+        <span class="cs-stat-label">kuttyjetty.com — full brand and Shopify storefront</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- THE FIELD -->
+<section class="field-section">
+  <div class="section-header">
+    <h2 class="reveal">The <span class="hl">Field.</span></h2>
+    <span class="sl reveal d2">What the research showed</span>
+  </div>
+  <div class="field-intro reveal">
+    <p>India's kidswear market is large, growing, and almost entirely talking to the wrong person. Most brands address parents — comfort, safety, durability, washing instructions. All valid. All necessary. And all deeply uninteresting to a five-year-old who has opinions about what they want to wear. Kutty Jetty's brief was to build a brand that worked on both levels — reassuring enough for the parent paying, exciting enough for the kid wearing. The colour research was where everything began.</p>
+  </div>
+  <div class="field-finds">
+    <div class="field-find reveal d1">
+      <span class="find-num">01</span>
+      <span class="find-stat">Colour is the first language of children's fashion — and most brands get it wrong.</span>
+      <p class="find-desc">Research into children's colour psychology and South Indian visual culture showed a consistent pattern: kids respond to colour with full conviction. They don't hedge. The muted, "tasteful" palettes most premium kidswear brands use are chosen for parents who want inoffensive Instagram grids — not for kids who want to run into a room and be noticed. Kutty Jetty's palette was built from how South Indian festivals, textiles, and streetlife actually look. Saturated. Joyful. Unapologetic.</p>
+    </div>
+    <div class="field-find reveal d2">
+      <span class="find-num">02</span>
+      <span class="find-stat">South Indian identity in kidswear was almost entirely absent as a genuine design position.</span>
+      <p class="find-desc">The Indian kidswear market had two dominant modes: international brands with no regional identity, and traditional ethnic wear with too much of it. The space in between — a brand that was distinctly South Indian in spirit without being a costume — was wide open. "Kutty" is what every paati calls her grandchild. It's what every amma calls her child when they do something brilliant. The name was already embedded in the culture. It just needed a brand around it.</p>
+    </div>
+    <div class="field-find reveal d3">
+      <span class="find-num">03</span>
+      <span class="find-stat">Export-quality fabric at accessible prices was the functional gap nobody had filled locally.</span>
+      <p class="find-desc">Tirupur — 40 km from Coimbatore, producing 90% of India's cotton knitwear exports — was making world-class fabric that mostly left the country. The same quality going into European children's clothing was available to an Indian brand willing to work with local mills. Kutty Jetty took that material seriously: pre-washed, breathable, built for all-day movement. Not fast fashion for kids — properly made things that last and can be passed down.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BRIEF & INSIGHT -->
+<div class="brief-insight">
+  <div class="brief-col reveal">
+    <span class="col-label">The Brief</span>
+    <h3 class="col-heading">Build a South Indian kidswear brand that kids actually want.</h3>
+    <div class="col-body">
+      <p>Kutty Jetty came with the product already figured out — export-quality South Indian mill cotton, fun prints, unisex fits, festive and everyday collections. What needed building was everything around it: the brand identity, the colour system, the Shopify storefront, and the visual language that would make it feel like its own thing rather than a regional version of something else.</p>
+      <p>The brief was to get into kids fashion deeply — understand what colours work, what prints land, how South Indian visual culture could inform a brand that felt contemporary rather than costumey. Make it regional without making it nostalgic. Make it playful without making it childish. And make it honest: these are good clothes, made well, from the right place.</p>
+    </div>
+  </div>
+  <div class="insight-col reveal d2" style="background:linear-gradient(160deg,#1a0a0a,#2d0f14);">
+    <span class="col-label" style="color:rgba(247,242,232,0.3);">The Insight</span>
+    <h3 class="col-heading" style="color:var(--paper);">The kutti knows what they want. Design for them first.</h3>
+    <div class="col-body" style="color:rgba(247,242,232,0.6);">
+      <p>Every other brand was designing for the parent's confidence. We designed for the kid's joy. The parent buys it; the kid wears it — and if the kid doesn't want to wear it, nobody wins. South Indian kids grow up surrounded by the most saturated colour palette in the world: kolam patterns, temple gopurams, silk sarees, festival lights. They have excellent taste. We just had to meet them where they already were.</p>
+      <p>The brand system was built from that logic outward. Colour wasn't an afterthought — it was the first decision. Typography that felt bold and fun without screaming. A name in Tamil script alongside the English. A brand that didn't explain its South Indian-ness, it just was.</p>
+    </div>
+    <div class="insight-pull" style="color:var(--accent);border-top:1px solid rgba(247,242,232,0.1);padding-top:32px;margin-top:40px;">Regional pride<br/>doesn't need<br/>a footnote.</div>
+  </div>
+</div>
+
+<!-- THE WORK -->
+<section class="work-section">
+  <div class="section-header">
+    <h2 class="reveal">The <span class="hl">Work.</span></h2>
+    <span class="sl reveal d2">02 Deliverables</span>
+  </div>
+
+  <!-- 01 BRANDING -->
+  <div class="deliverable">
+    <div class="del-visual" style="background:#1a0a0a;">
+      <svg width="100%" height="100%" viewBox="0 0 560 480" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <!-- Colour palette research grid — the core of the brand work -->
+        <!-- Row 1: Primary brand colours -->
+        <rect x="40" y="40" width="72" height="72" rx="2" fill="#e63946"/>
+        <rect x="124" y="40" width="72" height="72" rx="2" fill="#f4a261"/>
+        <rect x="208" y="40" width="72" height="72" rx="2" fill="#2a9d8f"/>
+        <rect x="292" y="40" width="72" height="72" rx="2" fill="#e9c46a"/>
+        <rect x="376" y="40" width="72" height="72" rx="2" fill="#264653"/>
+        <rect x="460" y="40" width="60" height="72" rx="2" fill="#a8dadc"/>
+        <!-- Colour labels -->
+        <text x="76" y="128" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.4)">FESTIVAL</text>
+        <text x="160" y="128" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.4)">MANGO</text>
+        <text x="244" y="128" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.4)">JADE</text>
+        <text x="328" y="128" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.4)">TURMERIC</text>
+        <text x="412" y="128" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.4)">DEEP INK</text>
+        <text x="490" y="128" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.4)">SKY</text>
+        <!-- Row 2: Lighter tones -->
+        <rect x="40" y="148" width="72" height="48" rx="2" fill="rgba(230,57,70,0.3)"/>
+        <rect x="124" y="148" width="72" height="48" rx="2" fill="rgba(244,162,97,0.3)"/>
+        <rect x="208" y="148" width="72" height="48" rx="2" fill="rgba(42,157,143,0.3)"/>
+        <rect x="292" y="148" width="72" height="48" rx="2" fill="rgba(233,196,106,0.3)"/>
+        <rect x="376" y="148" width="72" height="48" rx="2" fill="rgba(38,70,83,0.3)"/>
+        <rect x="460" y="148" width="60" height="48" rx="2" fill="rgba(168,218,220,0.3)"/>
+        <!-- Brand wordmark concept -->
+        <rect x="40" y="224" width="480" height="80" rx="3" fill="rgba(247,242,232,0.04)" stroke="rgba(247,242,232,0.08)" stroke-width="0.6"/>
+        <text x="280" y="258" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="36" fill="rgba(247,242,232,0.9)" letter-spacing="2">KUTTY JETTY</text>
+        <text x="280" y="278" text-anchor="middle" font-family="DM Mono,monospace" font-size="9" fill="rgba(247,242,232,0.3)" letter-spacing="3">குட்டி ஜெட்டி</text>
+        <text x="280" y="294" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.2)" letter-spacing="2">PLAYFUL KIDSWEAR FROM SOUTH INDIA</text>
+        <!-- Print pattern swatches -->
+        <text x="40" y="336" font-family="DM Mono,monospace" font-size="8" fill="rgba(247,242,232,0.25)" letter-spacing="1">PRINT DIRECTION</text>
+        <!-- Swatch 1: Kolam-inspired geometric -->
+        <rect x="40" y="348" width="100" height="100" rx="2" fill="rgba(230,57,70,0.12)" stroke="rgba(230,57,70,0.2)" stroke-width="0.5"/>
+        <g stroke="rgba(230,57,70,0.5)" stroke-width="0.8" fill="none">
+          <rect x="60" y="368" width="60" height="60" rx="2" transform="rotate(45 90 398)"/>
+          <rect x="70" y="378" width="40" height="40" rx="1" transform="rotate(45 90 398)"/>
+          <circle cx="90" cy="398" r="6"/>
+          <circle cx="90" cy="398" r="12" opacity="0.4"/>
+        </g>
+        <text x="90" y="460" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.25)">Kolam Geo</text>
+        <!-- Swatch 2: Dots/confetti -->
+        <rect x="156" y="348" width="100" height="100" rx="2" fill="rgba(244,162,97,0.12)" stroke="rgba(244,162,97,0.2)" stroke-width="0.5"/>
+        <g fill="rgba(244,162,97,0.7)">
+          <circle cx="176" cy="368" r="4"/><circle cx="196" cy="378" r="3"/><circle cx="216" cy="368" r="5"/>
+          <circle cx="236" cy="378" r="3"/><circle cx="176" cy="393" r="3"/><circle cx="196" cy="403" r="5"/>
+          <circle cx="216" cy="393" r="4"/><circle cx="236" cy="403" r="3"/><circle cx="176" cy="418" r="5"/>
+          <circle cx="196" cy="428" r="3"/><circle cx="216" cy="418" r="3"/><circle cx="236" cy="428" r="4"/>
+        </g>
+        <text x="206" y="460" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.25)">Festive Dots</text>
+        <!-- Swatch 3: Stripes inspired by lungi patterns -->
+        <rect x="272" y="348" width="100" height="100" rx="2" fill="rgba(42,157,143,0.12)" stroke="rgba(42,157,143,0.2)" stroke-width="0.5"/>
+        <g stroke="rgba(42,157,143,0.6)" fill="none">
+          <line x1="272" y1="360" x2="372" y2="360" stroke-width="6" stroke="rgba(42,157,143,0.4)"/>
+          <line x1="272" y1="374" x2="372" y2="374" stroke-width="2"/>
+          <line x1="272" y1="384" x2="372" y2="384" stroke-width="8" stroke="rgba(42,157,143,0.35)"/>
+          <line x1="272" y1="400" x2="372" y2="400" stroke-width="2"/>
+          <line x1="272" y1="410" x2="372" y2="410" stroke-width="6" stroke="rgba(42,157,143,0.4)"/>
+          <line x1="272" y1="424" x2="372" y2="424" stroke-width="2"/>
+          <line x1="272" y1="434" x2="372" y2="434" stroke-width="8" stroke="rgba(42,157,143,0.35)"/>
+          <line x1="272" y1="444" x2="372" y2="444" stroke-width="2"/>
+        </g>
+        <text x="322" y="460" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.25)">Lungi Stripe</text>
+        <!-- Swatch 4: Banana leaf motif -->
+        <rect x="388" y="348" width="132" height="100" rx="2" fill="rgba(233,196,106,0.12)" stroke="rgba(233,196,106,0.2)" stroke-width="0.5"/>
+        <path d="M430 440 Q454 390 478 360" stroke="rgba(233,196,106,0.5)" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M430 440 Q406 390 388 370" stroke="rgba(233,196,106,0.35)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M430 440 Q440 405 460 385" stroke="rgba(233,196,106,0.3)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M430 440 Q420 405 400 385" stroke="rgba(233,196,106,0.3)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <text x="454" y="460" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.25)">Leaf Motif</text>
+      </svg>
+    </div>
+    <div class="del-info reveal">
+      <span class="del-num">01</span>
+      <h3 class="del-title">Brand Identity & Colour System</h3>
+      <p class="del-desc">Built the brand from colour up — because in kidswear, colour is the first conversation. Deep research into South Indian visual culture: kolam geometry, lungi stripes, festival saturations, temple palettes. Six primary hues named after things South Indian kids actually know — Festival Red, Mango, Jade, Turmeric, Deep Ink, Sky. Print directions drawn from the same source: kolam-inspired geometry, festive dots, lungi stripes, banana leaf motifs. Regional without being a costume. Bold without being loud.</p>
+      <div class="del-tags">
+        <span class="del-tag">Brand Identity</span>
+        <span class="del-tag">Colour Research</span>
+        <span class="del-tag">Print Direction</span>
+        <span class="del-tag">Typography</span>
+        <span class="del-tag">Tamil Script Integration</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 SHOPIFY -->
+  <div class="deliverable flip">
+    <div class="del-visual" style="background:#0d0808;">
+      <svg width="88%" viewBox="0 0 440 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Storefront desktop -->
+        <rect x="0" y="0" width="280" height="220" rx="3" fill="rgba(247,242,232,0.03)" stroke="rgba(247,242,232,0.07)" stroke-width="0.6"/>
+        <rect x="0" y="0" width="280" height="20" fill="rgba(247,242,232,0.05)" rx="3"/>
+        <rect x="50" y="5" width="140" height="10" rx="2" fill="rgba(247,242,232,0.06)"/>
+        <text x="75" y="13" font-family="DM Mono,monospace" font-size="6" fill="rgba(247,242,232,0.25)">kuttyjetty.com</text>
+        <!-- Nav with brand colours -->
+        <rect x="0" y="20" width="280" height="24" fill="#e63946" opacity="0.9"/>
+        <text x="140" y="35" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="11" fill="#fff" letter-spacing="2">KUTTY JETTY</text>
+        <text x="14" y="35" font-family="DM Mono,monospace" font-size="6" fill="rgba(255,255,255,0.6)">Shop</text>
+        <text x="42" y="35" font-family="DM Mono,monospace" font-size="6" fill="rgba(255,255,255,0.6)">Festive</text>
+        <text x="76" y="35" font-family="DM Mono,monospace" font-size="6" fill="rgba(255,255,255,0.6)">Everyday</text>
+        <text x="246" y="35" font-family="DM Mono,monospace" font-size="6" fill="rgba(255,255,255,0.6)">🛒 Cart</text>
+        <!-- Hero section -->
+        <rect x="0" y="44" width="280" height="80" fill="rgba(233,196,106,0.15)"/>
+        <text x="16" y="72" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="20" fill="rgba(247,242,232,0.9)">MADE FOR</text>
+        <text x="16" y="92" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="20" fill="#e63946">ALL-DAY</text>
+        <text x="16" y="112" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="13" fill="rgba(247,242,232,0.5)">Kuttis</text>
+        <!-- Product grid -->
+        <rect x="8" y="136" width="82" height="72" rx="2" fill="rgba(230,57,70,0.2)" stroke="rgba(230,57,70,0.25)" stroke-width="0.5"/>
+        <line x1="8" y1="152" x2="90" y2="152" stroke="rgba(230,57,70,0.4)" stroke-width="1.5"/>
+        <line x1="8" y1="162" x2="90" y2="162" stroke="rgba(233,196,106,0.3)" stroke-width="1"/>
+        <line x1="8" y1="172" x2="90" y2="172" stroke="rgba(42,157,143,0.25)" stroke-width="1"/>
+        <line x1="8" y1="182" x2="90" y2="182" stroke="rgba(230,57,70,0.3)" stroke-width="1.5"/>
+        <text x="8" y="218" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="9" fill="rgba(247,242,232,0.7)">FESTIVAL SHIRT</text>
+        <text x="8" y="228" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.35)">₹1,050</text>
+        <rect x="98" y="136" width="82" height="72" rx="2" fill="rgba(42,157,143,0.2)" stroke="rgba(42,157,143,0.2)" stroke-width="0.5"/>
+        <line x1="98" y1="148" x2="180" y2="148" stroke="rgba(233,196,106,0.5)" stroke-width="2"/>
+        <line x1="98" y1="160" x2="180" y2="160" stroke="rgba(42,157,143,0.35)" stroke-width="1.5"/>
+        <line x1="98" y1="172" x2="180" y2="172" stroke="rgba(230,57,70,0.3)" stroke-width="1"/>
+        <line x1="98" y1="184" x2="180" y2="184" stroke="rgba(233,196,106,0.4)" stroke-width="1.5"/>
+        <text x="98" y="218" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="9" fill="rgba(247,242,232,0.7)">EVERYDAY TEE</text>
+        <text x="98" y="228" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.35)">₹850</text>
+        <rect x="188" y="136" width="84" height="72" rx="2" fill="rgba(244,162,97,0.18)" stroke="rgba(244,162,97,0.2)" stroke-width="0.5"/>
+        <line x1="188" y1="154" x2="272" y2="154" stroke="rgba(244,162,97,0.4)" stroke-width="1.5"/>
+        <line x1="188" y1="166" x2="272" y2="166" stroke="rgba(230,57,70,0.3)" stroke-width="1"/>
+        <line x1="188" y1="178" x2="272" y2="178" stroke="rgba(244,162,97,0.3)" stroke-width="1.5"/>
+        <line x1="188" y1="190" x2="272" y2="190" stroke="rgba(42,157,143,0.25)" stroke-width="1"/>
+        <text x="188" y="218" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="9" fill="rgba(247,242,232,0.7)">KOLAM SET</text>
+        <text x="188" y="228" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.35)">₹1,299</text>
+
+        <!-- Mobile right -->
+        <rect x="296" y="20" width="140" height="260" rx="10" fill="rgba(247,242,232,0.03)" stroke="rgba(247,242,232,0.12)" stroke-width="0.8"/>
+        <rect x="296" y="20" width="140" height="28" fill="#e63946" opacity="0.9" rx="10"/>
+        <text x="366" y="37" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="10" fill="#fff" letter-spacing="1">KUTTY JETTY</text>
+        <!-- Mobile product page -->
+        <rect x="304" y="56" width="124" height="100" rx="2" fill="rgba(42,157,143,0.2)"/>
+        <line x1="304" y1="72" x2="428" y2="72" stroke="rgba(233,196,106,0.5)" stroke-width="2.5"/>
+        <line x1="304" y1="86" x2="428" y2="86" stroke="rgba(42,157,143,0.4)" stroke-width="2"/>
+        <line x1="304" y1="100" x2="428" y2="100" stroke="rgba(230,57,70,0.35)" stroke-width="1.5"/>
+        <line x1="304" y1="114" x2="428" y2="114" stroke="rgba(233,196,106,0.4)" stroke-width="2"/>
+        <line x1="304" y1="128" x2="428" y2="128" stroke="rgba(42,157,143,0.3)" stroke-width="1.5"/>
+        <line x1="304" y1="142" x2="428" y2="142" stroke="rgba(230,57,70,0.3)" stroke-width="2"/>
+        <text x="304" y="172" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="13" fill="rgba(247,242,232,0.85)">FESTIVAL SHIRT</text>
+        <text x="304" y="186" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.3)">South Indian Mill Cotton</text>
+        <!-- Size selector -->
+        <text x="304" y="204" font-family="DM Mono,monospace" font-size="7" fill="rgba(247,242,232,0.25)">SIZE</text>
+        <rect x="304" y="210" width="24" height="16" rx="1" stroke="rgba(230,57,70,0.6)" stroke-width="0.8" fill="rgba(230,57,70,0.15)"/>
+        <text x="316" y="221" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(230,57,70,0.8)">2Y</text>
+        <rect x="332" y="210" width="24" height="16" rx="1" stroke="rgba(247,242,232,0.12)" stroke-width="0.6" fill="none"/>
+        <text x="344" y="221" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(247,242,232,0.3)">4Y</text>
+        <rect x="360" y="210" width="24" height="16" rx="1" stroke="rgba(247,242,232,0.12)" stroke-width="0.6" fill="none"/>
+        <text x="372" y="221" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(247,242,232,0.3)">6Y</text>
+        <rect x="388" y="210" width="28" height="16" rx="1" stroke="rgba(247,242,232,0.12)" stroke-width="0.6" fill="none"/>
+        <text x="402" y="221" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(247,242,232,0.3)">8Y</text>
+        <!-- ATC -->
+        <rect x="304" y="234" width="124" height="24" rx="1" fill="rgba(230,57,70,0.85)"/>
+        <text x="366" y="249" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="9" fill="#fff" letter-spacing="0.5">ADD TO CART</text>
+        <!-- Trust badge -->
+        <text x="304" y="268" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(247,242,232,0.2)">✓ Pre-washed  ✓ Export cotton</text>
+        <text x="304" y="280" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(247,242,232,0.2)">✓ Unisex fit  ✓ All-day comfort</text>
+      </svg>
+    </div>
+    <div class="del-info reveal">
+      <span class="del-num">02</span>
+      <h3 class="del-title">Shopify Storefront — kuttyjetty.com</h3>
+      <p class="del-desc">Built a storefront that carried the brand's energy — warm, vibrant, South Indian without being self-conscious about it. Product photography direction led with the colour and the movement: kids in clothes, clothes being worn, not clothes on white backgrounds. Festival and everyday collections clearly delineated. Size guides and material callouts — pre-washed, export cotton, unisex — positioned as genuine features, not afterthoughts. The kind of site that makes a parent feel good about buying and makes a kid want what's in it.</p>
+      <div class="del-tags">
+        <span class="del-tag">Shopify Development</span>
+        <span class="del-tag">UI/UX Design</span>
+        <span class="del-tag">Product Architecture</span>
+        <span class="del-tag">Mobile-First</span>
+      </div>
+      <a href="https://www.kuttyjetty.com" target="_blank" style="display:inline-flex;flex-direction:column;gap:4px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:14px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--ink);margin-top:8px;align-self:flex-start;">
+        View Website →
+        <span style="height:2px;background:var(--accent);width:100%;"></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results-section" style="background:linear-gradient(160deg,#1a0a0a,#2d0f14);">
+  <div class="results-header">
+    <h2 class="reveal">The <span class="hl" style="color:#1a0a0a;">Result.</span></h2>
+  </div>
+  <div class="results-grid">
+    <div class="result-block reveal d1" style="border-right:1px solid rgba(247,242,232,0.08);">
+      <span class="result-num" style="color:var(--accent);">குட்டி</span>
+      <span class="result-label">A brand the kids recognise as theirs</span>
+      <p class="result-desc">Kutty Jetty sits in a different conversation than every other Indian kidswear brand — regional, bold, and modern. Not because it explained itself, but because it didn't need to.</p>
+    </div>
+    <div class="result-block reveal d2" style="border-right:1px solid rgba(247,242,232,0.08);">
+      <span class="result-num" style="color:var(--accent);">Live</span>
+      <span class="result-label">Full brand + Shopify, kuttyjetty.com</span>
+      <p class="result-desc">Brand identity, colour system, print direction, and a complete Shopify storefront — delivered as a system built to scale with new collections each season.</p>
+    </div>
+    <div class="result-block reveal d3">
+      <span class="result-num" style="color:var(--accent);">South</span>
+      <span class="result-label">Indian identity, without apology</span>
+      <p class="result-desc">Tamil script in the identity. Festival wear as a hero category. Colours named after things South Indian kids grow up around. The brand knows exactly who it's for.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT -->
+<div class="next-project">
+  <div class="next-label-col"><span class="next-label">Next Case Study</span></div>
+  <a href="boit-club.html" class="next-link-col">
+    <h2 class="next-project-title">Boit Club</h2>
+    <p class="next-project-sub">India's only supercar registry — built from nothing into a category.</p>
+    <span class="next-arrow">View Case Study →</span>
+  </a>
+</div>
+
+<footer>
+  <div class="footer-col">
+    <a href="index.html" class="footer-wordmark"><span class="wm-top">Bleed &</span><span class="wm-bot">Margins</span></a>
+    <p class="footer-copy">© 2024 Bleed & Margins.<br/>All rights reserved.</p>
+  </div>
+  <div class="footer-col">
+    <p class="footer-label">Navigation</p>
+    <ul class="footer-links">
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="index.html#approach">Approach</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <p class="footer-label">Get in Touch</p>
+    <div class="footer-contact">
+      <a href="mailto:hello@bleedandmargins.com">hello@bleedandmargins.com</a>
+      <a href="#">Book a Call →</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const cd=document.getElementById('cd'),cr=document.getElementById('cr');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(loop);})();
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Disable custom cursor on touch devices
+if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+  const dot = document.getElementById('cd');
+  const ring = document.getElementById('cr');
+  if (dot) dot.style.display = 'none';
+  if (ring) ring.style.display = 'none';
+  document.body.style.cursor = 'auto';
+}
+
+</script>
+</body>
+</html>

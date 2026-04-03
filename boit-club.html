@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Boit Club — Bleed & Margins</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,800;0,900;1,700;1,800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+:root{
+  --ink:#1a1510;--paper:#f7f2e8;--off:#f0e8d8;--dim:#e8dfc8;
+  --muted:#8a7d6a;--border:rgba(26,21,16,0.15);--accent:#c9f04b;
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;
+  background-image:
+    linear-gradient(rgba(26,21,16,0.065) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(26,21,16,0.065) 1px,transparent 1px),
+    linear-gradient(rgba(26,21,16,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(26,21,16,0.025) 1px,transparent 1px);
+  background-size:80px 80px,80px 80px,20px 20px,20px 20px;
+}
+body::after{content:'';position:fixed;inset:0;z-index:9990;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.035;pointer-events:none;mix-blend-mode:multiply;}
+.cursor-dot{position:fixed;z-index:9999;width:10px;height:10px;background:var(--ink);border-radius:0;pointer-events:none;transform:translate(-50%,-50%);}
+.cursor-ring{position:fixed;z-index:9998;width:32px;height:32px;border:1.5px solid var(--ink);border-radius:0;pointer-events:none;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s;opacity:0.4;}
+body:has(a:hover) .cursor-ring{width:48px;height:48px;opacity:1;}
+.crop{position:fixed;inset:0;z-index:9980;pointer-events:none;}
+.crop::before,.crop::after,.crop span::before,.crop span::after{content:'';position:absolute;background:rgba(26,21,16,0.12);}
+.crop::before{top:22px;left:6px;width:18px;height:1px;}
+.crop::after{top:6px;left:22px;width:1px;height:18px;}
+.crop span:first-child::before{top:22px;right:6px;width:18px;height:1px;}
+.crop span:first-child::after{top:6px;right:22px;width:1px;height:18px;}
+.crop span:last-child::before{bottom:22px;left:6px;width:18px;height:1px;}
+.crop span:last-child::after{bottom:6px;left:22px;width:1px;height:18px;}
+.crop-br-h{position:fixed;bottom:22px;right:6px;width:18px;height:1px;background:rgba(26,21,16,0.2);z-index:9981;pointer-events:none;}
+.crop-br-v{position:fixed;bottom:6px;right:22px;width:1px;height:18px;background:rgba(26,21,16,0.2);z-index:9981;pointer-events:none;}
+.hl{background:linear-gradient(104deg,transparent 0%,rgba(201,240,75,0) 1%,rgba(201,240,75,0.42) 2.5%,rgba(201,240,75,0.38) 96%,rgba(201,240,75,0) 99%,transparent 100%);padding:0.04em 0.3em;margin:0 -0.08em;-webkit-box-decoration-break:clone;box-decoration-break:clone;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:stretch;border-bottom:1px solid var(--ink);background:var(--paper);height:64px;}
+.nav-wordmark{text-decoration:none;display:flex;flex-direction:column;justify-content:center;line-height:1;gap:0;padding:0 24px;border-right:1px solid var(--ink);min-width:140px;}
+.nav-wordmark .wm-top{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;color:var(--ink);line-height:1.05;}
+.nav-wordmark .wm-bot{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--ink);letter-spacing:0.22em;text-transform:uppercase;line-height:1;}
+.nav-back{display:flex;align-items:center;padding:0 28px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--ink);opacity:0.45;transition:opacity .15s;border-right:1px solid var(--ink);}
+.nav-back:hover{opacity:1;}
+.nav-cta{margin-left:auto;display:flex;align-items:center;padding:0 28px;border-left:1px solid var(--ink);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;color:var(--ink);transition:background .15s,color .15s;white-space:nowrap;}
+.nav-cta:hover{background:var(--ink);color:var(--paper);}
+
+/* HERO */
+.cs-hero{
+  margin-top:64px;min-height:92vh;
+  background:var(--ink);
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--ink);
+  position:relative;overflow:hidden;
+}
+.cs-hero-left{
+  padding:80px 56px;display:flex;flex-direction:column;
+  justify-content:space-between;border-right:1.5px solid rgba(247,242,232,0.1);
+}
+.cs-eyebrow{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(247,242,232,0.35);margin-bottom:32px;}
+.cs-title{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:clamp(72px,10vw,148px);line-height:0.85;
+  text-transform:uppercase;letter-spacing:-0.02em;color:var(--paper);
+  flex:1;display:flex;align-items:center;
+}
+.cs-hero-meta{display:flex;flex-direction:column;gap:16px;padding-top:48px;border-top:1px solid rgba(247,242,232,0.1);}
+.cs-tags{display:flex;gap:8px;flex-wrap:wrap;}
+.cs-tag{font-size:8px;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(247,242,232,0.2);padding:5px 11px;color:rgba(247,242,232,0.5);}
+.cs-tag.accent{background:var(--accent);border-color:var(--accent);color:var(--ink);}
+.cs-hero-right{
+  padding:80px 56px;display:flex;flex-direction:column;justify-content:flex-end;
+  position:relative;
+}
+.cs-opening-line{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:clamp(22px,2.8vw,38px);line-height:1.3;
+  color:rgba(247,242,232,0.85);max-width:460px;margin-bottom:48px;
+}
+.cs-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(247,242,232,0.1);}
+.cs-stat{background:var(--ink);padding:28px 24px;}
+.cs-stat-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(36px,4vw,56px);color:var(--accent);line-height:1;letter-spacing:-0.02em;display:block;margin-bottom:4px;}
+.cs-stat-label{font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(247,242,232,0.35);}
+
+/* FIELD SECTION */
+.field-section{border-bottom:1px solid var(--ink);}
+.field-header{padding:80px 72px 52px;border-bottom:1px solid var(--ink);display:flex;align-items:baseline;gap:24px;}
+.field-header h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(44px,6vw,88px);text-transform:uppercase;line-height:0.88;letter-spacing:-0.01em;}
+.field-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
+.field-intro{padding:64px 72px;border-bottom:1px solid var(--ink);max-width:760px;}
+.field-intro p{font-family:'Instrument Serif',serif;font-size:clamp(17px,1.8vw,22px);line-height:1.7;color:rgba(26,21,16,0.75);}
+.field-finds{display:grid;grid-template-columns:repeat(3,1fr);}
+.field-find{padding:64px 52px;border-right:1px solid var(--ink);}
+.field-find:last-child{border-right:none;}
+.find-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:72px;color:rgba(26,21,16,0.06);line-height:1;display:block;margin-bottom:12px;}
+.find-stat{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(32px,3.5vw,52px);text-transform:uppercase;line-height:0.9;letter-spacing:-0.01em;margin-bottom:16px;display:block;}
+.find-desc{font-family:'Instrument Serif',serif;font-size:15px;line-height:1.7;color:var(--muted);}
+
+/* BRIEF & INSIGHT */
+.brief-insight{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--ink);}
+.brief-col{padding:72px;border-right:1px solid var(--ink);}
+.brief-col:last-child{border-right:none;}
+.col-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:28px;display:block;}
+.col-heading{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(28px,3vw,44px);text-transform:uppercase;letter-spacing:-0.01em;line-height:0.92;margin-bottom:24px;}
+.col-body{font-family:'Instrument Serif',serif;font-size:16px;line-height:1.75;color:rgba(26,21,16,0.72);}
+.col-body p+p{margin-top:16px;}
+.insight-col{background:var(--ink);padding:72px;}
+.insight-col .col-label{color:rgba(247,242,232,0.35);}
+.insight-col .col-heading{color:var(--paper);}
+.insight-col .col-body{color:rgba(247,242,232,0.65);}
+.insight-pull{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:clamp(36px,4vw,60px);text-transform:uppercase;line-height:0.88;
+  letter-spacing:-0.01em;color:var(--accent);margin-top:40px;
+  border-top:1px solid rgba(247,242,232,0.1);padding-top:32px;
+}
+
+/* WORK DELIVERED */
+.work-section{border-bottom:1px solid var(--ink);}
+.work-section-header{padding:80px 72px 52px;border-bottom:1px solid var(--ink);display:flex;align-items:baseline;gap:24px;}
+.work-section-header h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(44px,6vw,88px);text-transform:uppercase;line-height:0.88;letter-spacing:-0.01em;}
+
+/* Deliverable blocks */
+.deliverable{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--ink);min-height:480px;}
+.deliverable.flip .del-visual{order:-1;}
+.del-visual{position:relative;overflow:hidden;background:var(--ink);display:flex;align-items:center;justify-content:center;}
+.del-visual-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:48px;}
+/* Placeholder visuals */
+.del-placeholder{width:100%;aspect-ratio:16/9;background:rgba(247,242,232,0.04);border:1px solid rgba(247,242,232,0.08);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.del-placeholder .ph-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,242,232,0.2);}
+/* 3D car visual placeholder */
+.vis-3d{background:linear-gradient(135deg,#0d0d0d 0%,#1a1510 50%,#0a0a0a 100%);}
+.vis-registry{background:linear-gradient(135deg,#0a0d12 0%,#101824 50%,#080c10 100%);}
+.vis-social{background:linear-gradient(135deg,#0a0a10 0%,#14101a 50%,#0d0a14 100%);}
+.vis-viral{background:linear-gradient(135deg,#100808 0%,#1a0f0a 50%,#0d0808 100%);}
+.del-info{padding:72px;display:flex;flex-direction:column;justify-content:center;gap:20px;}
+.del-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:64px;color:rgba(26,21,16,0.06);line-height:1;display:block;margin-bottom:-8px;}
+.del-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(36px,4vw,60px);text-transform:uppercase;line-height:0.9;letter-spacing:-0.01em;}
+.del-desc{font-family:'Instrument Serif',serif;font-size:16px;line-height:1.75;color:var(--muted);max-width:420px;}
+.del-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.del-tag{font-size:8px;letter-spacing:0.12em;text-transform:uppercase;border:1px solid var(--border);padding:4px 9px;color:var(--muted);}
+
+/* RESULTS */
+.results-section{background:var(--ink);border-bottom:1px solid var(--ink);}
+.results-header{padding:80px 72px 52px;border-bottom:1px solid rgba(247,242,232,0.1);}
+.results-header h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(44px,6vw,88px);text-transform:uppercase;line-height:0.88;letter-spacing:-0.01em;color:var(--paper);}
+.results-grid{display:grid;grid-template-columns:repeat(4,1fr);}
+.result-block{padding:64px 48px;border-right:1px solid rgba(247,242,232,0.1);}
+.result-block:last-child{border-right:none;}
+.result-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(48px,5.5vw,80px);color:var(--accent);line-height:0.88;letter-spacing:-0.02em;display:block;margin-bottom:8px;}
+.result-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(247,242,232,0.35);display:block;margin-bottom:12px;}
+.result-desc{font-family:'Instrument Serif',serif;font-size:14px;line-height:1.65;color:rgba(247,242,232,0.5);}
+
+/* QUOTE */
+.quote-section{padding:104px 72px;border-bottom:1px solid var(--ink);background:var(--dim);}
+.quote-mark{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:120px;line-height:0.6;color:var(--accent);display:block;margin-bottom:16px;}
+.quote-text{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(22px,2.8vw,38px);line-height:1.4;color:var(--ink);max-width:800px;margin-bottom:40px;}
+.quote-attr{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;text-transform:uppercase;letter-spacing:0.06em;}
+.quote-role{font-size:10px;letter-spacing:0.15em;color:var(--muted);margin-top:4px;}
+
+/* NEXT PROJECT */
+.next-project{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--ink);}
+.next-label-col{padding:88px 72px;border-right:1px solid var(--ink);display:flex;align-items:flex-end;}
+.next-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
+.next-link-col{padding:88px 72px;display:flex;flex-direction:column;justify-content:flex-end;gap:16px;transition:background .2s;text-decoration:none;color:var(--ink);}
+.next-link-col:hover{background:var(--dim);}
+.next-project-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(48px,7vw,100px);text-transform:uppercase;line-height:0.88;letter-spacing:-0.01em;}
+.next-project-sub{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;color:var(--muted);}
+.next-arrow{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;letter-spacing:0.1em;text-transform:uppercase;margin-top:8px;}
+
+/* FOOTER */
+footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
+.footer-col{padding:40px;border-right:1px solid rgba(247,242,232,0.1);display:flex;flex-direction:column;justify-content:space-between;}
+.footer-col:last-child{border-right:none;}
+.footer-wordmark{text-decoration:none;display:flex;flex-direction:column;line-height:1;gap:1px;}
+.footer-wordmark .wm-top{font-family:'Instrument Serif',serif;font-style:italic;font-size:20px;color:rgba(247,242,232,0.6);line-height:1.05;}
+.footer-wordmark .wm-bot{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:rgba(247,242,232,0.9);text-transform:uppercase;letter-spacing:0.22em;}
+.footer-copy{font-size:9px;color:rgba(247,242,232,0.22);letter-spacing:0.1em;margin-top:32px;}
+.footer-label{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(247,242,232,0.2);margin-bottom:20px;}
+.footer-links{display:flex;flex-direction:column;gap:12px;list-style:none;}
+.footer-links a{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(247,242,232,0.38);text-decoration:none;transition:color .15s;}
+.footer-links a:hover{color:var(--accent);}
+.footer-contact a{display:block;font-family:'DM Mono',monospace;font-size:11px;color:rgba(247,242,232,0.45);text-decoration:none;transition:color .15s;margin-bottom:10px;}
+.footer-contact a:hover{color:var(--accent);}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.06s;}.d2{transition-delay:.12s;}.d3{transition-delay:.18s;}.d4{transition-delay:.24s;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .cs-hero,.brief-insight,.deliverable,.next-project{grid-template-columns:1fr;}
+  .deliverable.flip .del-visual{order:0;}
+  .del-visual{min-height:300px;}
+  .field-finds{grid-template-columns:1fr;}
+  .field-find{border-right:none;border-bottom:1px solid var(--ink);}
+  .field-find:last-child{border-bottom:none;}
+  .results-grid{grid-template-columns:1fr 1fr;}
+  .result-block:nth-child(2){border-right:none;}
+  .result-block:nth-child(3){border-top:1px solid rgba(247,242,232,0.1);}
+  footer{grid-template-columns:1fr;}
+  .footer-col{border-right:none;border-bottom:1px solid rgba(247,242,232,0.1);}
+}
+@media(max-width:768px){
+  nav .nav-back,.nav-cta{padding:0 16px;}
+  .nav-wordmark{padding:0 16px;min-width:auto;}
+  .cs-hero-left,.cs-hero-right{padding:48px 24px;}
+  .field-header,.work-section-header,.results-header{padding:40px 24px 28px;}
+  .field-intro{padding:36px 24px;}
+  .field-find,.brief-col,.insight-col,.del-info,.quote-section{padding:40px 24px;}
+  .next-label-col,.next-link-col{padding:48px 24px;}
+  footer .footer-col{padding:40px 24px;}
+}
+
+/* ══ MOBILE FIXES ══ */
+
+/* Hide custom cursor on touch devices */
+@media (hover: none), (pointer: coarse) {
+  body { cursor: auto !important; }
+  .cursor-dot, .cursor-ring { display: none !important; }
+  a, button { cursor: pointer !important; }
+}
+
+/* ── NAV mobile ── */
+@media (max-width: 768px) {
+  nav { height: 52px; }
+  .nav-wordmark { min-width: auto; padding: 0 16px; }
+  .nav-links { display: none; }
+  .nav-back { padding: 0 16px; font-size: 11px; }
+  .nav-cta { padding: 0 16px; font-size: 11px; }
+}
+
+/* ── HERO — index ── */
+@media (max-width: 768px) {
+  #hero { grid-template-columns: 1fr; margin-top: 52px; }
+  .hero-left { padding: 48px 24px 40px; }
+  .hero-right { min-height: 50vw; }
+  .hero-eyebrow { margin-bottom: 32px; }
+  .hero-headline { font-size: clamp(52px, 13vw, 80px); }
+  .hero-bottom { flex-direction: column; align-items: flex-start; gap: 24px; margin-top: 32px; }
+  .hero-desc { max-width: 100%; font-size: 15px; }
+}
+
+/* ── CASE STUDY HERO ── */
+@media (max-width: 768px) {
+  .cs-hero { grid-template-columns: 1fr; margin-top: 52px; }
+  .cs-hero-left { padding: 48px 24px 40px; }
+  .cs-hero-right { padding: 40px 24px 48px; }
+  .cs-title { font-size: clamp(64px, 16vw, 100px); }
+  .cs-opening-line { font-size: clamp(18px, 5vw, 26px); margin-bottom: 32px; }
+  .cs-stats { grid-template-columns: 1fr 1fr; }
+  .cs-stat-num { font-size: clamp(24px, 6vw, 40px); }
+}
+
+/* ── PAGE HEADER — work.html ── */
+@media (max-width: 768px) {
+  .page-header { grid-template-columns: 1fr; margin-top: 52px; }
+  .ph-left { padding: 48px 24px 40px; }
+  .ph-right { padding: 40px 24px 48px; }
+  .ph-title { font-size: clamp(56px, 14vw, 88px); }
+  .ph-count { font-size: 36px; }
+}
+
+/* ── SECTIONS ── */
+@media (max-width: 768px) {
+  .section-header { padding: 48px 24px 32px; flex-wrap: wrap; gap: 8px; }
+  .section-header h2 { font-size: clamp(36px, 10vw, 60px); }
+  .field-intro { padding: 40px 24px; }
+  .field-finds { grid-template-columns: 1fr; }
+  .field-find { padding: 40px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+  .field-find:last-child { border-bottom: none; }
+}
+
+/* ── BRIEF & INSIGHT ── */
+@media (max-width: 768px) {
+  .brief-insight { grid-template-columns: 1fr; }
+  .brief-col { padding: 48px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+  .insight-col { padding: 48px 24px; }
+  .col-heading { font-size: clamp(24px, 7vw, 36px); }
+  .insight-pull { font-size: clamp(24px, 7vw, 36px); }
+}
+
+/* ── WORK DELIVERABLES ── */
+@media (max-width: 768px) {
+  .work-section-header { padding: 48px 24px 32px; }
+  .deliverable { grid-template-columns: 1fr; }
+  .deliverable.flip .del-visual { order: 0; }
+  .del-visual { min-height: 60vw; }
+  .del-info { padding: 40px 24px; }
+  .del-title { font-size: clamp(28px, 8vw, 44px); }
+  .del-desc { font-size: 15px; }
+  .del-vborder { border-right: none !important; border-left: none !important; border-bottom: 1px solid var(--border); }
+}
+
+/* ── RESULTS ── */
+@media (max-width: 768px) {
+  .results-header { padding: 48px 24px 32px; }
+  .results-header h2 { font-size: clamp(36px, 10vw, 60px); }
+  .results-grid { grid-template-columns: 1fr; }
+  .result-block { border-right: none !important; border-bottom: 1px solid rgba(247,242,232,0.1); padding: 40px 24px; }
+  .result-block:last-child { border-bottom: none; }
+  .result-num { font-size: clamp(36px, 10vw, 56px); }
+}
+
+/* ── APPROACH ── */
+@media (max-width: 768px) {
+  .approach-header { padding: 56px 24px 40px; }
+  .approach-header h2 { font-size: clamp(40px, 11vw, 72px); }
+  .approach-steps { grid-template-columns: 1fr; }
+  .approach-step { border-right: none; border-bottom: 1px solid rgba(247,242,232,0.1); padding: 40px 24px; }
+  .approach-step:last-child { border-bottom: none; }
+  .approach-body-row { padding: 40px 24px; flex-direction: column; align-items: flex-start; gap: 24px; }
+  .approach-body-text { font-size: 15px; }
+}
+
+/* ── TESTIMONIALS ── */
+@media (max-width: 768px) {
+  .testimonial-grid, .testimonial-track { flex-direction: column; display: flex; }
+  .testimonial-card { border-right: none; border-bottom: 1px solid var(--border); padding: 40px 24px; }
+  .testimonial-card:last-child { border-bottom: none; }
+}
+
+/* ── CONTACT ── */
+@media (max-width: 768px) {
+  .contact-header { padding: 56px 24px 40px; }
+  .contact-header h2 { font-size: clamp(40px, 11vw, 72px); }
+  .contact-body { grid-template-columns: 1fr; }
+  .contact-info { padding: 40px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+  .contact-form-wrap { padding: 40px 24px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* ── SERVICES ── */
+@media (max-width: 768px) {
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .service-card { padding: 32px 20px 40px; }
+  .service-card:nth-child(odd) { border-right: 1px solid var(--border); }
+  .service-card:nth-child(even) { border-right: none; }
+}
+@media (max-width: 480px) {
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card { border-right: none !important; }
+  .cs-stats { grid-template-columns: 1fr; }
+}
+
+/* ── WORK GRID ── */
+@media (max-width: 768px) {
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card { border-right: none; min-height: 80vw; }
+  .proj-content { padding: 28px 20px; }
+  .proj-title { font-size: clamp(32px, 9vw, 52px); }
+  .work-header-row { padding: 48px 24px 32px; flex-direction: column; gap: 12px; }
+  .work-header-row h2 { font-size: clamp(40px, 11vw, 64px); }
+  .filter-bar { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+  .filter-btn { white-space: nowrap; flex-shrink: 0; }
+}
+
+/* ── CASE STUDY work section ── */
+@media (max-width: 768px) {
+  .case-study { grid-template-columns: 1fr; min-height: auto; }
+  .case-study:nth-child(even) .case-visual { order: 0; }
+  .case-visual { min-height: 60vw; }
+  .case-info { padding: 40px 24px; }
+  .case-title { font-size: clamp(36px, 10vw, 56px); }
+  .case-sub { font-size: 14px; }
+  .case-metric-val { font-size: 14px; }
+  .work-header { padding: 48px 24px 32px; flex-direction: column; gap: 10px; }
+  .work-footer { padding: 48px 24px; }
+}
+
+/* ── NEXT PROJECT ── */
+@media (max-width: 768px) {
+  .next-project { grid-template-columns: 1fr; }
+  .next-label-col { padding: 32px 24px 16px; border-right: none; border-bottom: 1px solid var(--border); }
+  .next-link-col { padding: 32px 24px 48px; }
+  .next-project-title { font-size: clamp(40px, 11vw, 64px); }
+}
+
+/* ── BOTTOM STRIP — work.html ── */
+@media (max-width: 768px) {
+  .bottom-strip { grid-template-columns: 1fr; }
+  .bs-left { padding: 48px 24px; border-right: none; border-bottom: 1px solid rgba(247,242,232,0.08); }
+  .bs-right { padding: 40px 24px; gap: 32px; }
+  .bs-heading { font-size: clamp(32px, 9vw, 52px); }
+}
+
+/* ── FOOTER ── */
+@media (max-width: 768px) {
+  footer { grid-template-columns: 1fr; }
+  .footer-col { border-right: none; border-bottom: 1px solid rgba(247,242,232,0.1); padding: 32px 24px; }
+  .footer-col:last-child { border-bottom: none; }
+}
+
+/* ── QUOTE SECTION ── */
+@media (max-width: 768px) {
+  .quote-section { padding: 56px 24px; }
+  .quote-text { font-size: clamp(18px, 5vw, 26px); }
+  .quote-mark { font-size: 80px; }
+}
+
+/* ── GENERAL TYPOGRAPHY SCALE ── */
+@media (max-width: 480px) {
+  .hero-headline { font-size: clamp(44px, 13vw, 64px); }
+  .cs-title { font-size: clamp(56px, 14vw, 80px); }
+  .section-header h2 { font-size: clamp(32px, 10vw, 52px); }
+  .col-heading { font-size: clamp(22px, 7vw, 32px); }
+  .del-title { font-size: clamp(26px, 8vw, 38px); }
+}
+
+/* ── PREVENT HORIZONTAL OVERFLOW ── */
+* { max-width: 100%; }
+img, svg { max-width: 100%; height: auto; }
+pre, code { overflow-x: auto; }
+
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="cd"></div>
+<div class="cursor-ring" id="cr"></div>
+<div class="crop"><span></span><span></span></div>
+<div class="crop-br-h"></div><div class="crop-br-v"></div>
+
+<nav>
+  <a href="index.html" class="nav-wordmark">
+    <span class="wm-top">Bleed &</span>
+    <span class="wm-bot">Margins</span>
+  </a>
+  <a href="work.html" class="nav-back">← Work</a>
+  <a href="index.html#contact" class="nav-cta">Get in Touch</a>
+</nav>
+
+<!-- HERO -->
+<div class="cs-hero">
+  <div class="cs-hero-left">
+    <div>
+      <p class="cs-eyebrow">Case Study · Social Media & Shopify · Luxury Automotive</p>
+      <div class="cs-title">Boit<br/>Club</div>
+    </div>
+    <div class="cs-hero-meta">
+      <div class="cs-tags">
+        <span class="cs-tag accent">Shopify</span>
+        <span class="cs-tag accent">Social Media</span>
+        <span class="cs-tag">Content</span>
+        <span class="cs-tag">Video Production</span>
+        <span class="cs-tag">Growth</span>
+      </div>
+    </div>
+  </div>
+  <div class="cs-hero-right">
+    <p class="cs-opening-line reveal">"India has the world's fastest-growing ultra-wealthy population — and nowhere to buy a supercar with any confidence."</p>
+    <div class="cs-stats">
+      <div class="cs-stat reveal d1">
+        <span class="cs-stat-num">5M+</span>
+        <span class="cs-stat-label">Views on a single piece of content</span>
+      </div>
+      <div class="cs-stat reveal d2">
+        <span class="cs-stat-num">7.2K</span>
+        <span class="cs-stat-label">Instagram followers built from scratch</span>
+      </div>
+      <div class="cs-stat reveal d3">
+        <span class="cs-stat-num">NDTV</span>
+        <span class="cs-stat-label">National media coverage earned organically</span>
+      </div>
+      <div class="cs-stat reveal d4">
+        <span class="cs-stat-num">3D</span>
+        <span class="cs-stat-label">Digital showroom — India's first for supercars</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- THE FIELD -->
+<section class="field-section">
+  <div class="field-header">
+    <h2 class="reveal">The <span class="hl">Field.</span></h2>
+    <span class="field-label reveal d2">What we found</span>
+  </div>
+  <div class="field-intro reveal">
+    <p>India's luxury car market crossed 51,200 units in 2024 — the first time past 50,000. The country is projected to see the fastest growth in ultra-high-net-worth individuals globally, rising 50% to nearly 20,000 UHNWIs by 2028. More money. More appetite. And almost no infrastructure for the most exclusive part of the market.</p>
+  </div>
+  <div class="field-finds">
+    <div class="field-find reveal d1">
+      <span class="find-num">01</span>
+      <span class="find-stat">1% of India's car market is luxury — the lowest among major economies.</span>
+      <p class="find-desc">Despite India's booming wealth, supercars remain invisible in official data. The market runs almost entirely on personal networks — brokers, WhatsApp groups, and word of mouth. No verified listings. No pricing transparency. No trust infrastructure.</p>
+    </div>
+    <div class="field-find reveal d2">
+      <span class="find-num">02</span>
+      <span class="find-stat">70% of India's used car market is unorganised — trust is the single biggest barrier.</span>
+      <p class="find-desc">For everyday cars, this is an inconvenience. For a ₹2 crore Lamborghini, it's a dealbreaker. The absence of verified history, expert valuation, and buyer authentication meant the entire supercar secondary market operated on blind faith.</p>
+    </div>
+    <div class="field-find reveal d3">
+      <span class="find-num">03</span>
+      <span class="find-stat">Online platforms for luxury vehicles are growing at 26% CAGR — but no one built for supercars.</span>
+      <p class="find-desc">Cars24, Spinny, Droom — all chasing the mass market. The highest end of the automotive world had no digital home in India. That was the gap. And that was the opportunity we designed Boit Club to fill.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE BRIEF & INSIGHT -->
+<div class="brief-insight">
+  <div class="brief-col reveal">
+    <span class="col-label">The Brief</span>
+    <h3 class="col-heading">A supercar registry that needed to feel like a club.</h3>
+    <div class="col-body">
+      <p>Boit Club came to us with a clear product: India's first verified supercar registry — a place to buy and sell supercars with trust, expert pricing, and access to a collector network that doesn't advertise itself publicly.</p>
+      <p>The challenge wasn't the product. It was presence. In a market built entirely on personal relationships, they needed to establish authority and exclusivity — digitally — before anyone would take them seriously. They needed a brand that could walk into a room of supercar collectors and belong there.</p>
+    </div>
+  </div>
+  <div class="insight-col reveal d2">
+    <span class="col-label">The Insight</span>
+    <h3 class="col-heading" style="color:var(--paper);">This wasn't a car marketplace. It was a membership.</h3>
+    <div class="col-body">
+      <p>The category mistake most competitors make is treating supercars like products. They're not. They're identities. The person who owns a McLaren 720S isn't shopping for transport — they're signalling belonging to a world most people will never enter.</p>
+      <p>So we didn't build Boit Club like a listing site. We built it like a private club with a digital address. Every touchpoint — the registry, the content, the social presence — was designed to communicate one thing: this is where serious collectors come.</p>
+    </div>
+    <div class="insight-pull">Trust is the product.<br/>The cars are just what's inside.</div>
+  </div>
+</div>
+
+<!-- THE WORK -->
+<section class="work-section">
+  <div class="work-section-header">
+    <h2 class="reveal">The <span class="hl">Work.</span></h2>
+    <span class="field-label reveal d2">04 Deliverables</span>
+  </div>
+
+  <!-- 01 3D Digital Showroom -->
+  <div class="deliverable">
+    <div class="del-visual vis-3d">
+      <div class="del-visual-inner">
+        <div class="del-placeholder vis-3d">
+          <!-- 3D car wireframe SVG illustration -->
+          <svg width="85%" viewBox="0 0 480 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Car body silhouette -->
+            <path d="M60 160 L80 120 L140 80 L220 68 L300 72 L360 90 L400 120 L420 160 Z" stroke="rgba(201,240,75,0.6)" stroke-width="1" fill="rgba(201,240,75,0.03)"/>
+            <!-- Wheels -->
+            <circle cx="140" cy="162" r="28" stroke="rgba(201,240,75,0.4)" stroke-width="1" fill="none"/>
+            <circle cx="140" cy="162" r="16" stroke="rgba(201,240,75,0.2)" stroke-width="0.6" fill="none"/>
+            <circle cx="340" cy="162" r="28" stroke="rgba(201,240,75,0.4)" stroke-width="1" fill="none"/>
+            <circle cx="340" cy="162" r="16" stroke="rgba(201,240,75,0.2)" stroke-width="0.6" fill="none"/>
+            <!-- Wireframe lines -->
+            <line x1="80" y1="120" x2="80" y2="160" stroke="rgba(247,242,232,0.08)" stroke-width="0.5"/>
+            <line x1="400" y1="120" x2="400" y2="160" stroke="rgba(247,242,232,0.08)" stroke-width="0.5"/>
+            <line x1="140" y1="80" x2="140" y2="130" stroke="rgba(247,242,232,0.08)" stroke-width="0.5"/>
+            <line x1="300" y1="72" x2="300" y2="135" stroke="rgba(247,242,232,0.08)" stroke-width="0.5"/>
+            <!-- Windscreen -->
+            <path d="M160 80 L200 68 L260 68 L280 85 L220 90 Z" stroke="rgba(247,242,232,0.15)" stroke-width="0.6" fill="rgba(247,242,232,0.04)"/>
+            <!-- Wing mirror -->
+            <rect x="360" y="98" width="18" height="8" rx="2" stroke="rgba(201,240,75,0.3)" stroke-width="0.6" fill="none"/>
+            <!-- Highlight line -->
+            <path d="M100 100 Q240 75 380 105" stroke="rgba(247,242,232,0.12)" stroke-width="0.8" fill="none"/>
+            <!-- Logo area -->
+            <circle cx="240" cy="68" r="12" stroke="rgba(201,240,75,0.5)" stroke-width="1" fill="none"/>
+            <text x="240" y="72" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="8" fill="rgba(201,240,75,0.7)">B</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="del-info reveal">
+      <span class="del-num">01</span>
+      <h3 class="del-title">Shopify Website & 3D Registry</h3>
+      <p class="del-desc">We built India's first supercar showroom online — not a listing page, a digital forecourt. Each car is photographed and rendered to bring out its full presence, so a buyer can feel the weight of a ₹3 crore machine through a screen. The Shopify store was built to communicate prestige at every scroll: slow reveal, dark staging, clinical detail.</p>
+      <div class="del-tags">
+        <span class="del-tag">Shopify Development</span>
+        <span class="del-tag">UI/UX Design</span>
+        <span class="del-tag">3D Visualization</span>
+        <span class="del-tag">CRO</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 Social Media -->
+  <div class="deliverable flip">
+    <div class="del-visual vis-social">
+      <div class="del-visual-inner">
+        <!-- Instagram grid mockup -->
+        <svg width="72%" viewBox="0 0 300 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Profile header -->
+          <circle cx="40" cy="32" r="20" stroke="rgba(247,242,232,0.2)" stroke-width="1" fill="rgba(247,242,232,0.04)"/>
+          <text x="40" y="36" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="10" fill="rgba(247,242,232,0.4)">B</text>
+          <text x="72" y="25" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="13" fill="rgba(247,242,232,0.8)">boit.club</text>
+          <text x="72" y="38" font-family="monospace" font-size="8" fill="rgba(247,242,232,0.3)">7,213 followers</text>
+          <!-- Grid: 3x4 -->
+          <g>
+            <rect x="0" y="65" width="94" height="94" fill="rgba(247,242,232,0.04)" stroke="rgba(247,242,232,0.06)" stroke-width="0.5"/>
+            <rect x="103" y="65" width="94" height="94" fill="rgba(201,240,75,0.08)" stroke="rgba(201,240,75,0.1)" stroke-width="0.5"/>
+            <rect x="206" y="65" width="94" height="94" fill="rgba(247,242,232,0.04)" stroke="rgba(247,242,232,0.06)" stroke-width="0.5"/>
+            <rect x="0" y="168" width="94" height="94" fill="rgba(247,242,232,0.06)" stroke="rgba(247,242,232,0.06)" stroke-width="0.5"/>
+            <rect x="103" y="168" width="94" height="94" fill="rgba(247,242,232,0.04)" stroke="rgba(247,242,232,0.06)" stroke-width="0.5"/>
+            <rect x="206" y="168" width="94" height="94" fill="rgba(201,240,75,0.06)" stroke="rgba(201,240,75,0.08)" stroke-width="0.5"/>
+            <rect x="0" y="271" width="94" height="94" fill="rgba(247,242,232,0.04)" stroke="rgba(247,242,232,0.06)" stroke-width="0.5"/>
+            <rect x="103" y="271" width="94" height="94" fill="rgba(247,242,232,0.06)" stroke="rgba(247,242,232,0.06)" stroke-width="0.5"/>
+            <rect x="206" y="271" width="94" height="94" fill="rgba(247,242,232,0.04)" stroke="rgba(247,242,232,0.06)" stroke-width="0.5"/>
+          </g>
+          <!-- Play icons on video posts -->
+          <polygon points="144,108 144,116 152,112" fill="rgba(247,242,232,0.3)"/>
+          <polygon points="247,215 247,223 255,219" fill="rgba(247,242,232,0.3)"/>
+        </svg>
+      </div>
+    </div>
+    <div class="del-info reveal">
+      <span class="del-num">02</span>
+      <h3 class="del-title">Social Media & Content Strategy</h3>
+      <p class="del-desc">Built an Instagram presence that looks like it belongs in the paddock, not a used car lot. We defined the tone — cinematic, insider, understated — and built a content system around it. Every caption written to signal: this is a community, not a catalogue. 195 posts. 7,213 followers. A feed that collectors actually follow.</p>
+      <div class="del-tags">
+        <span class="del-tag">Instagram Strategy</span>
+        <span class="del-tag">Content Direction</span>
+        <span class="del-tag">Copywriting</span>
+        <span class="del-tag">Community Building</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 Video Production -->
+  <div class="deliverable">
+    <div class="del-visual vis-viral">
+      <div class="del-visual-inner">
+        <!-- Viral stats grid -->
+        <svg width="88%" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Stat cards -->
+          <rect x="0" y="0" width="188" height="118" fill="rgba(247,242,232,0.03)" stroke="rgba(247,242,232,0.08)" stroke-width="0.8"/>
+          <text x="16" y="42" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="40" fill="rgba(201,240,75,0.9)">5M</text>
+          <text x="16" y="58" font-family="monospace" font-size="8" fill="rgba(247,242,232,0.3)">VIEWS · SINGLE REEL</text>
+          <text x="16" y="80" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="11" fill="rgba(247,242,232,0.5)">Ferrari x Bengaluru</text>
+          <text x="16" y="96" font-family="Barlow Condensed,sans-serif" font-size="10" fill="rgba(247,242,232,0.3)">Traffic wall moment</text>
+          <text x="16" y="110" font-family="monospace" font-size="8" fill="rgba(201,240,75,0.4)">▶ NDTV COVERAGE</text>
+
+          <rect x="212" y="0" width="188" height="118" fill="rgba(247,242,232,0.03)" stroke="rgba(247,242,232,0.08)" stroke-width="0.8"/>
+          <text x="228" y="42" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="40" fill="rgba(201,240,75,0.7)">4.1M</text>
+          <text x="228" y="58" font-family="monospace" font-size="8" fill="rgba(247,242,232,0.3)">VIEWS · FLEET REEL</text>
+          <text x="228" y="80" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="11" fill="rgba(247,242,232,0.5)">Supercar Fleet</text>
+          <text x="228" y="96" font-family="Barlow Condensed,sans-serif" font-size="10" fill="rgba(247,242,232,0.3)">Brand awareness moment</text>
+          <text x="228" y="110" font-family="monospace" font-size="8" fill="rgba(247,242,232,0.3)">87K LIKES</text>
+
+          <rect x="0" y="138" width="188" height="118" fill="rgba(247,242,232,0.03)" stroke="rgba(247,242,232,0.08)" stroke-width="0.8"/>
+          <text x="16" y="178" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="36" fill="rgba(201,240,75,0.6)">1.3M</text>
+          <text x="16" y="193" font-family="monospace" font-size="8" fill="rgba(247,242,232,0.3)">VIEWS · BOIT × FERRARI</text>
+          <text x="16" y="214" font-family="Barlow Condensed,sans-serif" font-size="10" fill="rgba(247,242,232,0.3)">Mumbai collab</text>
+          <text x="16" y="248" font-family="monospace" font-size="8" fill="rgba(247,242,232,0.25)">HT COVERAGE</text>
+
+          <rect x="212" y="138" width="188" height="118" fill="rgba(247,242,232,0.03)" stroke="rgba(247,242,232,0.08)" stroke-width="0.8"/>
+          <text x="228" y="178" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="36" fill="rgba(201,240,75,0.5)">802K</text>
+          <text x="228" y="193" font-family="monospace" font-size="8" fill="rgba(247,242,232,0.3)">VIEWS · REGISTRY REEL</text>
+          <text x="228" y="214" font-family="Barlow Condensed,sans-serif" font-size="10" fill="rgba(247,242,232,0.3)">Digital showroom reveal</text>
+          <text x="228" y="248" font-family="monospace" font-size="8" fill="rgba(247,242,232,0.25)">49K LIKES</text>
+        </svg>
+      </div>
+    </div>
+    <div class="del-info reveal">
+      <span class="del-num">03</span>
+      <h3 class="del-title">Video Production & Viral Content</h3>
+      <p class="del-desc">We didn't manufacture virality — we engineered moments. Shot Boit Club content to land like automotive cinema: low angle, slow motion, city backdrop. When a reel of Ferraris stuck in Bengaluru traffic hit 5 million views and landed on NDTV, it wasn't luck. It was a content strategy built around the tension between exotic machinery and everyday India.</p>
+      <div class="del-tags">
+        <span class="del-tag">Video Direction</span>
+        <span class="del-tag">Reels Production</span>
+        <span class="del-tag">Brand Films</span>
+        <span class="del-tag">Earned Media</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 Registry / Digital Showroom -->
+  <div class="deliverable flip">
+    <div class="del-visual vis-registry">
+      <div class="del-visual-inner">
+        <svg width="85%" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Registry card grid 2x2 + featured -->
+          <rect x="0" y="0" width="188" height="118" fill="rgba(247,242,232,0.03)" stroke="rgba(247,242,232,0.06)" stroke-width="0.8"/>
+          <rect x="0" y="20" width="188" height="78" fill="rgba(247,242,232,0.02)"/>
+          <!-- Car silhouettes rough shapes -->
+          <path d="M30 75 L50 55 L100 50 L140 55 L158 75 Z" stroke="rgba(247,242,232,0.15)" stroke-width="0.8" fill="rgba(247,242,232,0.04)"/>
+          <circle cx="55" cy="78" r="10" stroke="rgba(247,242,232,0.2)" stroke-width="0.8" fill="none"/>
+          <circle cx="133" cy="78" r="10" stroke="rgba(247,242,232,0.2)" stroke-width="0.8" fill="none"/>
+          <text x="8" y="108" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="10" fill="rgba(247,242,232,0.6)">LAMBORGHINI HURACÁN</text>
+
+          <rect x="212" y="0" width="188" height="118" fill="rgba(247,242,232,0.03)" stroke="rgba(201,240,75,0.15)" stroke-width="0.8"/>
+          <rect x="212" y="20" width="188" height="78" fill="rgba(247,242,232,0.02)"/>
+          <path d="M242 74 L262 54 L310 50 L350 54 L368 74 Z" stroke="rgba(201,240,75,0.2)" stroke-width="0.8" fill="rgba(201,240,75,0.04)"/>
+          <circle cx="267" cy="77" r="10" stroke="rgba(201,240,75,0.25)" stroke-width="0.8" fill="none"/>
+          <circle cx="343" cy="77" r="10" stroke="rgba(201,240,75,0.25)" stroke-width="0.8" fill="none"/>
+          <text x="220" y="108" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="10" fill="rgba(201,240,75,0.7)">ASTON MARTIN DB12</text>
+
+          <rect x="0" y="138" width="188" height="118" fill="rgba(247,242,232,0.03)" stroke="rgba(247,242,232,0.06)" stroke-width="0.8"/>
+          <path d="M30 213 L50 193 L100 188 L140 193 L158 213 Z" stroke="rgba(247,242,232,0.12)" stroke-width="0.8" fill="rgba(247,242,232,0.03)"/>
+          <circle cx="55" cy="216" r="10" stroke="rgba(247,242,232,0.15)" stroke-width="0.8" fill="none"/>
+          <circle cx="133" cy="216" r="10" stroke="rgba(247,242,232,0.15)" stroke-width="0.8" fill="none"/>
+          <text x="8" y="248" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="10" fill="rgba(247,242,232,0.5)">MCLAREN 720S</text>
+
+          <rect x="212" y="138" width="188" height="118" fill="rgba(247,242,232,0.03)" stroke="rgba(247,242,232,0.06)" stroke-width="0.8"/>
+          <path d="M242 212 L262 192 L310 188 L350 192 L368 212 Z" stroke="rgba(247,242,232,0.12)" stroke-width="0.8" fill="rgba(247,242,232,0.03)"/>
+          <circle cx="267" cy="215" r="10" stroke="rgba(247,242,232,0.15)" stroke-width="0.8" fill="none"/>
+          <circle cx="343" cy="215" r="10" stroke="rgba(247,242,232,0.15)" stroke-width="0.8" fill="none"/>
+          <text x="220" y="248" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="10" fill="rgba(247,242,232,0.5)">PORSCHE 911 GT3</text>
+        </svg>
+      </div>
+    </div>
+    <div class="del-info reveal">
+      <span class="del-num">04</span>
+      <h3 class="del-title">The Registry — India's Supercar Marketplace</h3>
+      <p class="del-desc">Turned listings into stories. Each car on the registry is presented as a character: full 3D render, verified history, expert-set pricing. We built a showroom experience where browsing feels like you've been let in through a side door. The copy, the layout, the photography direction — all designed to make a seller trust Boit with their ₹2 crore asset.</p>
+      <div class="del-tags">
+        <span class="del-tag">Digital Showroom</span>
+        <span class="del-tag">Listing Design</span>
+        <span class="del-tag">Photography Direction</span>
+        <span class="del-tag">Copywriting</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results-section">
+  <div class="results-header">
+    <h2 class="reveal">The <span class="hl" style="color:var(--ink);">Results.</span></h2>
+  </div>
+  <div class="results-grid">
+    <div class="result-block reveal d1">
+      <span class="result-num">5M+</span>
+      <span class="result-label">Peak content reach</span>
+      <p class="result-desc">Single reel, organic. No paid distribution. Pure content strategy — the right moment, the right edit, the right caption.</p>
+    </div>
+    <div class="result-block reveal d2">
+      <span class="result-num">7.2K</span>
+      <span class="result-label">Instagram followers</span>
+      <p class="result-desc">Built from zero into a community of serious collectors, enthusiasts, and high-net-worth buyers across India.</p>
+    </div>
+    <div class="result-block reveal d3">
+      <span class="result-num">2</span>
+      <span class="result-label">National media coverages</span>
+      <p class="result-desc">NDTV and Hindustan Times coverage — earned organically through content that the press found newsworthy on its own.</p>
+    </div>
+    <div class="result-block reveal d4">
+      <span class="result-num">1st</span>
+      <span class="result-label">Supercar registry online in India</span>
+      <p class="result-desc">Category-defining. No direct competitor at the time of launch. Boit Club owns the space they created.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-section reveal">
+  <span class="quote-mark">"</span>
+  <p class="quote-text">They brought in systems, creativity, and didn't waste time explaining the obvious. Working with them felt like working with people already inside the car culture.</p>
+  <p class="quote-attr">Aditya Arora</p>
+  <p class="quote-role">CEO, Boit Club</p>
+</div>
+
+<!-- NEXT PROJECT -->
+<div class="next-project">
+  <div class="next-label-col">
+    <span class="next-label">Next Case Study</span>
+  </div>
+  <a href="vist-labs.html" class="next-link-col">
+    <h2 class="next-project-title">VIST Labs</h2>
+    <p class="next-project-sub">Cannabis packaging & preservation, Illinois — where science needed to do the selling.</p>
+    <span class="next-arrow">View Case Study →</span>
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-col">
+    <a href="index.html" class="footer-wordmark">
+      <span class="wm-top">Bleed &</span>
+      <span class="wm-bot">Margins</span>
+    </a>
+    <p class="footer-copy">© 2024 Bleed & Margins.<br/>All rights reserved.</p>
+  </div>
+  <div class="footer-col">
+    <p class="footer-label">Navigation</p>
+    <ul class="footer-links">
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="index.html#approach">Approach</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <p class="footer-label">Get in Touch</p>
+    <div class="footer-contact">
+      <a href="mailto:hello@bleedandmargins.com">hello@bleedandmargins.com</a>
+      <a href="#">Book a Call →</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const cd=document.getElementById('cd'),cr=document.getElementById('cr');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(loop);})();
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Disable custom cursor on touch devices
+if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+  const dot = document.getElementById('cd');
+  const ring = document.getElementById('cr');
+  if (dot) dot.style.display = 'none';
+  if (ring) ring.style.display = 'none';
+  document.body.style.cursor = 'auto';
+}
+
+</script>
+</body>
+</html>
