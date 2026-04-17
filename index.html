@@ -45,7 +45,7 @@ body:has(a:hover) .cursor-ring,body:has(button:hover) .cursor-ring{width:48px;he
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:stretch;border-bottom:1px solid var(--ink);background:var(--paper);height:64px;}
 .nav-wordmark{text-decoration:none;display:flex;flex-direction:column;justify-content:center;line-height:1;gap:0;padding:0 24px;border-right:1px solid var(--ink);min-width:140px;}
 .nav-wordmark .wm-top{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;color:var(--ink);letter-spacing:-0.01em;line-height:1.05;}
-.nav-wordmark .wm-bot{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--ink);letter-spacing:0.22em;text-transform:uppercase;line-height:1;}
+.nav-wordmark .wm-bot{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--ink);letter-spacing:0.22em;text-transform:uppercase;line-height:1;}.nav-logo-img{height:34px;width:auto;display:block;}
 .nav-links{display:flex;flex:1;list-style:none;}
 .nav-links li{border-right:1px solid var(--ink);}
 .nav-links a{display:flex;align-items:center;padding:0 28px;height:100%;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--ink);opacity:0.45;transition:opacity .15s,background .15s;}
@@ -187,7 +187,7 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
 .footer-col:last-child{border-right:none;}
 .footer-wordmark{text-decoration:none;display:flex;flex-direction:column;line-height:1;gap:1px;}
 .footer-wordmark .wm-top{font-family:'Instrument Serif',serif;font-style:italic;font-size:20px;color:rgba(247,242,232,0.6);line-height:1.05;}
-.footer-wordmark .wm-bot{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:rgba(247,242,232,0.9);text-transform:uppercase;letter-spacing:0.22em;}
+.footer-wordmark .wm-bot{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:rgba(247,242,232,0.9);text-transform:uppercase;letter-spacing:0.22em;}.footer-logo-img{height:38px;width:auto;display:block;filter:brightness(0) invert(1);opacity:0.75;}
 .footer-copy{font-size:9px;color:rgba(247,242,232,0.22);letter-spacing:0.1em;margin-top:32px;}
 .footer-label{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(247,242,232,0.2);margin-bottom:20px;}
 .footer-links{display:flex;flex-direction:column;gap:12px;list-style:none;}
@@ -484,8 +484,7 @@ pre, code { overflow-x: auto; }
 
 <nav>
   <a href="#" class="nav-wordmark">
-    <span class="wm-top">Bleed &</span>
-    <span class="wm-bot">Margins</span>
+    <img src="bm-logo.svg" alt="Bleed &amp; Margins" class="nav-logo-img">
   </a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
@@ -797,8 +796,7 @@ pre, code { overflow-x: auto; }
 <footer>
   <div class="footer-col">
     <a href="#" class="footer-wordmark">
-      <span class="wm-top">Bleed &</span>
-      <span class="wm-bot">Margins</span>
+      <img src="bm-logo.svg" alt="Bleed &amp; Margins" class="footer-logo-img">
     </a>
     <p class="footer-copy">© 2024 Bleed & Margins.<br/>All rights reserved.</p>
   </div>
