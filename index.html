@@ -458,7 +458,8 @@ pre, code { overflow-x: auto; }
 .hr-brands-track img{height:60px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:0.35;transition:opacity 0.3s,filter 0.3s;}
 .hr-brands-track img:hover{opacity:1;filter:brightness(0) invert(1) drop-shadow(0 0 6px rgba(247,242,232,0.6));}
 @keyframes brandScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-@media(max-width:768px){.hr-brands-track img{height:36px;}.hr-brands-track{gap:28px;}}
+.hr-brands-track img[alt="JW Marriott"],.hr-brands-track img[alt="Obaku"]{height:68px;}
+@media(max-width:768px){.hr-brands-track img{height:36px;}.hr-brands-track img[alt="JW Marriott"],.hr-brands-track img[alt="Obaku"]{height:43px;}.hr-brands-track{gap:28px;}}
 .hr-name-story{margin-top:83px;padding-top:0;border:none;margin-bottom:20px;}
 .hr-name-q{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(247,242,232,0.2);margin-bottom:6px;}
 .hr-name-a{font-family:'DM Mono',monospace;font-size:12px;color:rgba(247,242,232,0.4);line-height:1.7;max-width:420px;letter-spacing:0.01em;}
