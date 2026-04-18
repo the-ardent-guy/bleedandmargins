@@ -213,6 +213,9 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
 }
 @media(max-width:900px){
   #hero{grid-template-columns:1fr;}
+  .hero-left{border-right:none;}
+  .hero-right{min-height:auto;}
+  .hero-right-content{padding:28px 24px 28px;}
   .case-study{grid-template-columns:1fr;}
   .case-study:nth-child(even) .case-visual{order:0;}
   .case-visual{min-height:260px;}
@@ -229,7 +232,6 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
   nav{height:48px;}
   .nav-wordmark{min-width:auto;padding:0 16px;}
   .nav-cta{padding:0 16px;}
-  .hero-right{min-height:50vw;}
   .section-header,.work-header-row,.approach-header,.contact-header{padding:40px 24px 32px;}
   .services-grid{grid-template-columns:1fr 1fr;}
   .service-card:nth-child(3){border-right:1px solid var(--ink);}
@@ -266,8 +268,8 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
 /* ── HERO — index ── */
 @media (max-width: 768px) {
   #hero { grid-template-columns: 1fr; margin-top: 52px; }
-  .hero-left { padding: 48px 24px 40px; }
-  .hero-right { min-height: 50vw; }
+  .hero-left { padding: 48px 24px 40px; border-right: none; }
+  .hero-right { min-height: auto; }
   .hero-eyebrow { margin-bottom: 32px; }
   .hero-headline { font-size: clamp(52px, 13vw, 80px); }
   .hero-bottom { flex-direction: column; align-items: flex-start; gap: 24px; margin-top: 32px; }
@@ -459,7 +461,7 @@ pre, code { overflow-x: auto; }
 .hr-brands-track img:hover{opacity:1;filter:brightness(0) invert(1) drop-shadow(0 0 6px rgba(247,242,232,0.6));}
 @keyframes brandScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 .hr-brands-track img[alt="JW Marriott"],.hr-brands-track img[alt="Obaku"]{height:68px;}
-@media(max-width:768px){.hr-brands-track img{height:75px;}.hr-brands-track img[alt="JW Marriott"],.hr-brands-track img[alt="Obaku"]{height:82px;}.hr-brands-track{gap:28px;}.hr-brands{margin-top:32px;}.hero-right-content{padding-bottom:28px;}.hero-right{min-height:unset;}}
+@media(max-width:768px){.hr-brands-track img{height:75px;}.hr-brands-track img[alt="JW Marriott"],.hr-brands-track img[alt="Obaku"]{height:82px;}.hr-brands-track{gap:28px;}.hr-brands{margin-top:32px;}}
 .hr-name-story{margin-top:83px;padding-top:0;border:none;margin-bottom:20px;}
 .hr-name-q{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(247,242,232,0.2);margin-bottom:6px;}
 .hr-name-a{font-family:'DM Mono',monospace;font-size:12px;color:rgba(247,242,232,0.4);line-height:1.7;max-width:420px;letter-spacing:0.01em;}
