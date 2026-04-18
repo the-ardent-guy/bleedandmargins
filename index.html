@@ -452,12 +452,12 @@ pre, code { overflow-x: auto; }
 .hr-playing{margin-bottom:0;margin-top:30px;}
 .hr-track{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(26px,3.2vw,44px);text-transform:uppercase;letter-spacing:-0.01em;color:rgba(247,242,232,0.88);line-height:0.92;display:block;}
 .hr-artist{font-family:'Instrument Serif',serif;font-style:italic;font-size:15px;color:rgba(247,242,232,0.35);margin-top:10px;display:block;}
-.hr-lately{display:flex;flex-direction:column;margin-top:56px;}
-.hr-lately-item{display:flex;align-items:baseline;gap:10px;padding:5px 0;border-bottom:1px solid rgba(247,242,232,0.06);}
-.hr-lately-item:first-child{border-top:1px solid rgba(247,242,232,0.06);}
-.hr-arrow{font-size:11px;color:rgba(247,242,232,0.2);flex-shrink:0;}
-.hr-item-text{font-family:'DM Mono',monospace;font-size:11px;color:rgba(247,242,232,0.45);line-height:1.4;}
-.hr-item-tag{font-family:'DM Mono',monospace;font-size:10px;color:rgba(201,240,75,0.5);margin-left:auto;flex-shrink:0;padding-left:12px;}
+.hr-brands{display:flex;flex-direction:column;margin-top:56px;}
+.hr-brands-carousel{overflow:hidden;width:100%;position:relative;margin-top:16px;}
+.hr-brands-track{display:flex;align-items:center;gap:40px;animation:brandScroll 14s linear infinite;width:max-content;}
+.hr-brands-track img{height:28px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:0.35;transition:opacity 0.3s;}
+.hr-brands-track img:hover{opacity:0.7;}
+@keyframes brandScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 .hr-name-story{margin-top:83px;padding-top:0;border:none;margin-bottom:20px;}
 .hr-name-q{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(247,242,232,0.2);margin-bottom:6px;}
 .hr-name-a{font-family:'DM Mono',monospace;font-size:12px;color:rgba(247,242,232,0.4);line-height:1.7;max-width:420px;letter-spacing:0.01em;}
@@ -533,18 +533,23 @@ pre, code { overflow-x: auto; }
 
       <p class="hr-studio-line">Bleed is the edge you push past. Margins is the space you protect. Every brief lives in the tension between the two.</p>
 
-      <!-- LATELY -->
-      <div class="hr-lately">
-        <p class="hr-label">Lately —</p>
-        <div class="hr-lately-item">
-          <span class="hr-arrow">→</span>
-          <span class="hr-item-text">We're building an AI Operating System for freelancers. Ask us about it.</span>
-          <span class="hr-item-tag">wip</span>
-        </div>
-        <div class="hr-lately-item">
-          <span class="hr-arrow">→</span>
-          <span class="hr-item-text">Two of our team got married. Good for them. Rough for us.</span>
-          <span class="hr-item-tag">❤</span>
+      <!-- BRANDS CAROUSEL -->
+      <div class="hr-brands">
+        <p class="hr-label">Brands we're in close proximity with</p>
+        <div class="hr-brands-carousel">
+          <div class="hr-brands-track">
+            <img src="Logos/DMC.png" alt="DMC">
+            <img src="Logos/JW Marriott.png" alt="JW Marriott">
+            <img src="Logos/Obaku.png" alt="Obaku">
+            <img src="Logos/Oxy 99.png" alt="Oxy 99">
+            <img src="Logos/Scuderia Ferrari.png" alt="Scuderia Ferrari">
+            <!-- duplicate set for seamless loop -->
+            <img src="Logos/DMC.png" alt="DMC">
+            <img src="Logos/JW Marriott.png" alt="JW Marriott">
+            <img src="Logos/Obaku.png" alt="Obaku">
+            <img src="Logos/Oxy 99.png" alt="Oxy 99">
+            <img src="Logos/Scuderia Ferrari.png" alt="Scuderia Ferrari">
+          </div>
         </div>
       </div>
 
