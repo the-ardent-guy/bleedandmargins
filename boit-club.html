@@ -205,20 +205,6 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
 @media(max-width:768px){
   .collab-block{grid-template-columns:1fr;gap:20px;padding:48px 24px;}
 }
-/* Privacy section */
-.privacy-section{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--ink);min-height:520px;}
-.privacy-visual{background:var(--ink);position:relative;overflow:hidden;}
-.privacy-info{padding:80px 72px;display:flex;flex-direction:column;justify-content:center;gap:24px;border-left:1px solid var(--ink);}
-.privacy-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
-.privacy-heading{font-family:'NHG Display',sans-serif;font-weight:300;font-size:clamp(28px,3vw,44px);line-height:1.1;letter-spacing:-0.01em;}
-.privacy-body{font-family:'NHG Text',sans-serif;font-size:15px;line-height:1.75;color:rgba(26,21,16,0.7);max-width:460px;}
-.privacy-body p+p{margin-top:16px;}
-.privacy-pull{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);border-top:1px solid var(--ink);padding-top:24px;margin-top:8px;line-height:1.6;}
-@media(max-width:768px){
-  .privacy-section{grid-template-columns:1fr;}
-  .privacy-visual{min-height:60vw;}
-  .privacy-info{padding:48px 24px;border-left:none;border-top:1px solid var(--ink);}
-}
 /* ANIMATIONS */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
@@ -558,7 +544,7 @@ pre, code { overflow-x: auto; }
 <section class="work-section">
   <div class="work-section-header">
     <h2 class="reveal">The <span class="hl">Work.</span></h2>
-    <span class="field-label reveal d2">04 Deliverables</span>
+    <span class="field-label reveal d2">03 Deliverables</span>
   </div>
 
   <!-- 01 Shopify Commerce & Digital Showroom -->
@@ -593,56 +579,28 @@ pre, code { overflow-x: auto; }
     </div>
   </div>
 
+
+  <!-- 03 Privacy by Design -->
+  <div class="deliverable">
+    <div class="del-visual" style="background:var(--ink);"></div>
+    <div class="del-info reveal">
+      <span class="del-num">03</span>
+      <h3 class="del-title">Privacy by Design</h3>
+      <p class="del-desc">In this category, real photos of a real car tell anyone browsing where it lives and who owns it. We built the registry around 3D renders of near-identical specification - same model, year, colour, trim. Accurate enough for a serious buyer to evaluate every detail. Discreet enough that the seller stays invisible until they choose not to be. In luxury, privacy isn't a workaround. It's the product.</p>
+      <div class="del-tags">
+        <span class="del-tag">3D Visualisation</span>
+        <span class="del-tag">Privacy Architecture</span>
+        <span class="del-tag">Seller Trust</span>
+      </div>
+    </div>
+  </div>
+
   <!-- COLLABORATION CALLOUT -->
   <div class="collab-block reveal">
     <span class="collab-label">Beyond the build</span>
     <div class="collab-inner">
       <p class="collab-heading">The results you're about to read weren't just from the store.</p>
       <p class="collab-body">We work closely with some of the best automotive cinematographers, video editors, and performance marketing teams in the business. Not as services we sell - as long-standing collaborators we bring in when a brief calls for it. When clients work with us, they get access to that extended network. The 5M+ organic views, the NDTV coverage, the audience Boit Club built from zero - that came from pointing the right people in the right direction, with a commerce strategy underneath it all.</p>
-    </div>
-  </div>
-</section>
-<!-- PRIVACY & 3D RENDERS -->
-<section class="privacy-section">
-  <div class="privacy-visual">
-    <!-- 3D render image goes here -->
-  </div>
-  <div class="privacy-info reveal">
-    <span class="privacy-label">Design decision</span>
-    <h2 class="privacy-heading">Privacy is part of the product.</h2>
-    <div class="privacy-body">
-      <p>In luxury automotive, an owner listing their car doesn't want their asset, their location, or their identity visible to anyone with a browser. Real photos of a real car are a liability - a ₹3 crore Lamborghini photographed in a driveway tells anyone who looks where it lives and who owns it.</p>
-      <p>So we built the registry around 3D renders of near-identical specification - same model, same year, same colour, same trim. Accurate enough for a serious buyer to evaluate every detail. Discreet enough that the seller stays invisible until they choose not to be.</p>
-      <p>It wasn't a technical workaround. It was a category read. Serious collectors already know what the car looks like. What they need is trust in the listing. And trust starts with knowing their asset isn't being advertised to strangers without their consent.</p>
-    </div>
-    <p class="privacy-pull">The buyer gets accuracy. The seller keeps their privacy. That's the feature.</p>
-  </div>
-</section>
-<!-- RESULTS -->
-<section class="results-section">
-  <div class="results-header">
-    <h2 class="reveal">The <span class="hl" style="color:var(--ink);">Results.</span></h2>
-  </div>
-  <div class="results-grid">
-    <div class="result-block reveal d1">
-      <span class="result-num">1st</span>
-      <span class="result-label">Supercar registry in India</span>
-      <p class="result-desc">Category-defining. No direct competitor at launch. The store didn't enter a market - it created one.</p>
-    </div>
-    <div class="result-block reveal d2">
-      <span class="result-num">5M+</span>
-      <span class="result-label">Organic launch reach</span>
-      <p class="result-desc">A single reel, no paid distribution. The right content, pointed at the right category tension, at the right moment.</p>
-    </div>
-    <div class="result-block reveal d3">
-      <span class="result-num">2</span>
-      <span class="result-label">National media coverages</span>
-      <p class="result-desc">NDTV and Hindustan Times - earned, not bought. Press that found the story newsworthy on its own.</p>
-    </div>
-    <div class="result-block reveal d4">
-      <span class="result-num">7.2K</span>
-      <span class="result-label">Community built from zero</span>
-      <p class="result-desc">Serious collectors, enthusiasts, and high-net-worth buyers - an audience that belongs in the registry.</p>
     </div>
   </div>
 </section>
