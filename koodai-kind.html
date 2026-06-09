@@ -82,6 +82,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:st
 .deliverable{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--ink);min-height:500px;}
 .deliverable.flip .del-visual{order:-1;}
 .del-visual{position:relative;overflow:hidden;background:#1a0e06;display:flex;align-items:center;justify-content:center;}
+.del-visual img.cover{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:block;}
+.del-visual img.contain{width:85%;height:auto;display:block;position:relative;z-index:1;}
 .del-vborder{position:absolute;inset:0;border-right:1px solid var(--ink);pointer-events:none;z-index:2;}
 .deliverable.flip .del-vborder{border-right:none;border-left:1px solid var(--ink);}
 .del-info{padding:72px;display:flex;flex-direction:column;justify-content:center;gap:20px;background:var(--paper);}
@@ -305,56 +307,9 @@ img,svg{max-width:100%;height:auto;}
 
   <!-- 01 Shopify Storefront -->
   <div class="deliverable">
-    <div class="del-visual" style="background:linear-gradient(160deg,#0d0806,#1a1008,#2a1a0a);">
+    <div class="del-visual" style="background:#111009;">
       <div class="del-vborder"></div>
-      <svg width="85%" viewBox="0 0 400 360" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="0" width="400" height="32" rx="4" fill="rgba(247,242,232,0.05)" stroke="rgba(247,242,232,0.08)" stroke-width="0.6"/>
-        <rect x="60" y="8" width="200" height="16" rx="2" fill="rgba(247,242,232,0.06)"/>
-        <text x="90" y="19" font-family="monospace" font-size="7" fill="rgba(247,242,232,0.3)">koodaikind.com</text>
-        <rect x="0" y="32" width="400" height="32" fill="rgba(247,242,232,0.04)"/>
-        <text x="20" y="51" font-family="sans-serif" font-weight="900" font-size="13" fill="rgba(247,242,232,0.8)" letter-spacing="1">KOODAI KIND</text>
-        <text x="240" y="51" font-family="monospace" font-size="7" fill="rgba(247,242,232,0.3)">Shop</text>
-        <text x="276" y="51" font-family="monospace" font-size="7" fill="rgba(247,242,232,0.3)">About</text>
-        <text x="316" y="51" font-family="monospace" font-size="7" fill="rgba(247,242,232,0.3)">Care</text>
-        <rect x="0" y="64" width="400" height="100" fill="rgba(61,36,16,0.4)" stroke="rgba(247,242,232,0.05)" stroke-width="0.5"/>
-        <line x1="0" y1="76" x2="400" y2="76" stroke="rgba(201,240,75,0.15)" stroke-width="1.5"/>
-        <line x1="0" y1="88" x2="400" y2="88" stroke="rgba(247,113,30,0.1)" stroke-width="1"/>
-        <line x1="0" y1="100" x2="400" y2="100" stroke="rgba(247,242,232,0.06)" stroke-width="1"/>
-        <line x1="0" y1="112" x2="400" y2="112" stroke="rgba(201,240,75,0.12)" stroke-width="1.5"/>
-        <line x1="0" y1="124" x2="400" y2="124" stroke="rgba(247,113,30,0.08)" stroke-width="1"/>
-        <line x1="0" y1="136" x2="400" y2="136" stroke="rgba(247,242,232,0.05)" stroke-width="1"/>
-        <text x="24" y="96" font-family="sans-serif" font-weight="900" font-size="22" fill="rgba(247,242,232,0.9)">BORN ON VERANDAHS.</text>
-        <text x="24" y="116" font-family="sans-serif" font-weight="700" font-size="16" fill="rgba(247,242,232,0.55)">BUILT FOR NOW.</text>
-        <rect x="24" y="128" width="72" height="18" rx="1" fill="rgba(214,200,174,0.85)"/>
-        <text x="60" y="140" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="9" fill="#1a1510" letter-spacing="0.5">SHOP NOW</text>
-        <rect x="16" y="180" width="108" height="120" rx="2" fill="rgba(247,242,232,0.04)" stroke="rgba(247,242,232,0.08)" stroke-width="0.5"/>
-        <rect x="24" y="188" width="92" height="80" rx="1" fill="rgba(61,36,16,0.5)"/>
-        <line x1="24" y1="200" x2="116" y2="200" stroke="rgba(201,240,75,0.35)" stroke-width="1.5"/>
-        <line x1="24" y1="210" x2="116" y2="210" stroke="rgba(247,113,30,0.25)" stroke-width="1"/>
-        <line x1="24" y1="220" x2="116" y2="220" stroke="rgba(247,242,232,0.15)" stroke-width="1"/>
-        <line x1="24" y1="230" x2="116" y2="230" stroke="rgba(201,240,75,0.3)" stroke-width="1.5"/>
-        <line x1="24" y1="240" x2="116" y2="240" stroke="rgba(247,113,30,0.2)" stroke-width="1"/>
-        <line x1="24" y1="250" x2="116" y2="250" stroke="rgba(247,242,232,0.12)" stroke-width="1"/>
-        <text x="16" y="278" font-family="sans-serif" font-weight="700" font-size="10" fill="rgba(247,242,232,0.7)">TOTE KOODAI</text>
-        <text x="16" y="292" font-family="monospace" font-size="7" fill="rgba(247,242,232,0.35)">₹1,999</text>
-        <rect x="146" y="180" width="108" height="120" rx="2" fill="rgba(247,242,232,0.04)" stroke="rgba(214,200,174,0.2)" stroke-width="0.6"/>
-        <rect x="154" y="188" width="92" height="80" rx="1" fill="rgba(61,36,16,0.5)"/>
-        <line x1="154" y1="198" x2="246" y2="198" stroke="rgba(247,242,232,0.3)" stroke-width="1.5"/>
-        <line x1="154" y1="210" x2="246" y2="210" stroke="rgba(201,240,75,0.3)" stroke-width="1.5"/>
-        <line x1="154" y1="222" x2="246" y2="222" stroke="rgba(247,113,30,0.2)" stroke-width="1"/>
-        <line x1="154" y1="234" x2="246" y2="234" stroke="rgba(247,242,232,0.2)" stroke-width="1"/>
-        <line x1="154" y1="246" x2="246" y2="246" stroke="rgba(201,240,75,0.25)" stroke-width="1.5"/>
-        <text x="146" y="278" font-family="sans-serif" font-weight="700" font-size="10" fill="rgba(247,242,232,0.7)">SLING KOODAI</text>
-        <text x="146" y="292" font-family="monospace" font-size="7" fill="rgba(247,242,232,0.35)">₹1,399</text>
-        <rect x="276" y="180" width="108" height="120" rx="2" fill="rgba(247,242,232,0.04)" stroke="rgba(247,242,232,0.08)" stroke-width="0.5"/>
-        <rect x="284" y="188" width="92" height="80" rx="1" fill="rgba(61,36,16,0.5)"/>
-        <line x1="284" y1="206" x2="376" y2="206" stroke="rgba(247,113,30,0.4)" stroke-width="2"/>
-        <line x1="284" y1="220" x2="376" y2="220" stroke="rgba(247,242,232,0.2)" stroke-width="1"/>
-        <line x1="284" y1="234" x2="376" y2="234" stroke="rgba(247,113,30,0.3)" stroke-width="1.5"/>
-        <line x1="284" y1="248" x2="376" y2="248" stroke="rgba(247,242,232,0.15)" stroke-width="1"/>
-        <text x="276" y="278" font-family="sans-serif" font-weight="700" font-size="10" fill="rgba(247,242,232,0.7)">KAI KOODAI</text>
-        <text x="276" y="292" font-family="monospace" font-size="7" fill="rgba(247,242,232,0.35)">₹2,199</text>
-      </svg>
+      <img src="Case Study Images/koodaikind/koodai1.png" alt="Koodai Kind Shopify storefront on desktop and mobile" class="contain">
     </div>
     <div class="del-info reveal">
       <span class="del-num">01</span>
@@ -436,34 +391,9 @@ img,svg{max-width:100%;height:auto;}
 
   <!-- 03 Campaign Photography -->
   <div class="deliverable">
-    <div class="del-visual" style="background:linear-gradient(160deg,#1a0e06,#3d2410,#5a3820);">
+    <div class="del-visual" style="background:#c8b89a;">
       <div class="del-vborder"></div>
-      <svg width="100%" height="100%" viewBox="0 0 560 480" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-        <rect width="560" height="480" fill="rgba(247,242,232,0.02)"/>
-        <polygon points="0,480 180,200 360,200 560,480" fill="rgba(247,242,232,0.04)"/>
-        <g transform="translate(200,120)">
-          <rect x="0" y="30" width="160" height="140" rx="6" fill="rgba(247,242,232,0.08)" stroke="rgba(247,242,232,0.25)" stroke-width="1.5"/>
-          <line x1="0" y1="56" x2="160" y2="56" stroke="rgba(201,240,75,0.4)" stroke-width="2"/>
-          <line x1="0" y1="72" x2="160" y2="72" stroke="rgba(247,113,30,0.3)" stroke-width="1.5"/>
-          <line x1="0" y1="88" x2="160" y2="88" stroke="rgba(247,242,232,0.2)" stroke-width="1.5"/>
-          <line x1="0" y1="104" x2="160" y2="104" stroke="rgba(201,240,75,0.35)" stroke-width="2"/>
-          <line x1="0" y1="120" x2="160" y2="120" stroke="rgba(247,113,30,0.25)" stroke-width="1.5"/>
-          <line x1="0" y1="136" x2="160" y2="136" stroke="rgba(247,242,232,0.18)" stroke-width="1.5"/>
-          <line x1="0" y1="152" x2="160" y2="152" stroke="rgba(201,240,75,0.3)" stroke-width="1.5"/>
-          <line x1="32" y1="30" x2="32" y2="170" stroke="rgba(247,242,232,0.06)" stroke-width="0.5"/>
-          <line x1="64" y1="30" x2="64" y2="170" stroke="rgba(247,242,232,0.06)" stroke-width="0.5"/>
-          <line x1="96" y1="30" x2="96" y2="170" stroke="rgba(247,242,232,0.06)" stroke-width="0.5"/>
-          <line x1="128" y1="30" x2="128" y2="170" stroke="rgba(247,242,232,0.06)" stroke-width="0.5"/>
-          <path d="M30 30 Q30 0 80 0 Q130 0 130 30" stroke="rgba(247,242,232,0.4)" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <ellipse cx="80" cy="178" rx="70" ry="8" fill="rgba(0,0,0,0.3)"/>
-        </g>
-        <text x="32" y="440" font-family="monospace" font-size="10" fill="rgba(247,242,232,0.25)" letter-spacing="2">CHENNAI — 2024</text>
-        <text x="32" y="456" font-family="monospace" font-size="10" fill="rgba(247,242,232,0.15)" letter-spacing="2">CAMPAIGN SHOT 01 / 12</text>
-        <rect x="460" y="420" width="16" height="16" fill="rgba(201,240,75,0.7)" rx="1"/>
-        <rect x="480" y="420" width="16" height="16" fill="rgba(247,113,30,0.6)" rx="1"/>
-        <rect x="500" y="420" width="16" height="16" fill="rgba(247,242,232,0.4)" rx="1"/>
-        <rect x="520" y="420" width="16" height="16" fill="rgba(61,36,16,0.8)" rx="1"/>
-      </svg>
+      <img src="Case Study Images/koodaikind/koodai2.png" alt="Koodai Kind campaign photography" class="cover">
     </div>
     <div class="del-info reveal">
       <span class="del-num">03</span>
