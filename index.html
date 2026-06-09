@@ -50,10 +50,8 @@ body:has(a:hover) .cursor-ring,body:has(button:hover) .cursor-ring{width:48px;he
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:stretch;border-bottom:1px solid transparent;background:transparent;height:64px;}
 .nav-wordmark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-decoration:none;display:flex;align-items:center;padding:0 16px;z-index:1;}
-.nav-logo-img{height:26px;width:auto;display:block;}
-.nav-logo-default{display:none;}
-nav.scrolled .nav-logo-default{display:block;}
-nav.scrolled .nav-logo-ondark{display:none;}
+.nav-logo-img{height:26px;width:auto;display:block;filter:invert(1);transition:filter .4s ease;}
+nav.scrolled .nav-logo-img{filter:none;}
 .nav-cta{margin-left:auto;display:flex;align-items:center;padding:0 28px;border-left:1px solid var(--ink);font-family:'NHG Text',sans-serif;font-weight:500;font-size:11px;letter-spacing:0.07em;font-variant-caps:small-caps;text-decoration:none;color:var(--ink);transition:background .15s,color .15s;white-space:nowrap;}
 .nav-cta:hover{background:var(--ink);color:var(--paper);}
 .nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;padding:0 20px;height:100%;background:none;border:none;border-left:1px solid transparent;cursor:pointer;margin-left:auto;}
@@ -702,8 +700,7 @@ nav.scrolled .nav-hamburger{border-left-color:var(--ink);}
 
 <nav>
   <a href="index.html" class="nav-wordmark">
-    <img src="bm-logo-light.png" alt="Bleed &amp; Margins" class="nav-logo-img nav-logo-default">
-    <img src="bm-logo-dark.png" alt="" class="nav-logo-img nav-logo-ondark" aria-hidden="true">
+    <img src="bm-logo-light.png" alt="Bleed &amp; Margins" class="nav-logo-img">
   </a>
   <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span><span></span>
@@ -1125,7 +1122,7 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 (function(){
   const nav=document.querySelector('nav');
   if(!nav) return;
-  function updateNav(){nav.classList.toggle('scrolled',window.scrollY>80);}
+  function updateNav(){nav.classList.toggle('scrolled',window.scrollY>10);}
   window.addEventListener('scroll',updateNav,{passive:true});
   updateNav();
 })();
