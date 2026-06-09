@@ -511,16 +511,15 @@ pre, code { overflow-x: auto; }
 .hero-slide-num{font-family:'NHG Text',sans-serif;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(247,242,232,0.3);display:block;margin-bottom:10px;}
 .hero-slide-line{font-family:'JetBrains Mono',monospace;font-style:italic;font-size:clamp(11px,0.85vw,13px);color:rgba(247,242,232,0.72);max-width:500px;line-height:1.6;letter-spacing:0.01em;}
 .hero-slide-project{font-family:'NHG Text',sans-serif;font-weight:400;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,242,232,0.35);margin-top:10px;display:block;margin-bottom:0;}
-.hero-overlay{position:absolute;inset:0;z-index:3;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:92px 72px 72px;}
-.hero-overlay-top{display:flex;align-items:flex-start;justify-content:space-between;}
+.hero-overlay{position:absolute;inset:0;z-index:3;pointer-events:none;display:flex;flex-direction:column;justify-content:flex-end;padding:92px 72px 72px;}
+.hero-copy{margin-bottom:128px;}
+.hero-bottom-bar{display:flex;align-items:center;justify-content:space-between;pointer-events:none;}
 .hero-hl{font-family:'NHG Display',sans-serif;font-weight:300;font-size:clamp(44px,5.2vw,84px);line-height:0.95;text-transform:none;letter-spacing:-0.01em;color:var(--paper);}
 .hero-hl em{font-style:italic;color:rgba(247,242,232,0.62);}
-.hero-pov{writing-mode:vertical-rl;font-family:'NHG Text',sans-serif;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(247,242,232,0.22);transform:rotate(180deg);align-self:center;white-space:nowrap;}
-.hero-overlay-bottom{display:flex;align-items:flex-end;justify-content:flex-end;pointer-events:auto;}
 .hero-view-cta{display:inline-flex;flex-direction:column;gap:5px;font-family:'NHG Text',sans-serif;font-weight:400;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;color:var(--paper);pointer-events:auto;}
 .hero-view-cta .ul{height:2px;background:var(--accent);width:100%;transform-origin:left;transition:transform .3s;}
 .hero-view-cta:hover .ul{transform:scaleX(1.2);}
-.hero-dots{position:absolute;left:72px;bottom:72px;z-index:4;display:flex;gap:8px;align-items:center;pointer-events:auto;}
+.hero-dots{display:flex;gap:8px;align-items:center;pointer-events:auto;}
 .hero-dot-btn{width:24px;height:2px;background:rgba(247,242,232,0.2);border:none;padding:0;cursor:none;transition:background .3s,width .4s cubic-bezier(.25,.46,.45,.94);}
 .hero-dot-btn.active{width:40px;background:var(--accent);}
 
@@ -628,16 +627,15 @@ pre, code { overflow-x: auto; }
   #hero{height:100svh;min-height:520px;}
   .hero-overlay{padding:68px 24px 48px;}
   .hero-hl{font-size:clamp(36px,10vw,56px);}
-  .hero-pov{display:none;}
-  .hero-slide-caption{bottom:84px;left:24px;max-width:calc(100% - 48px);}
-  .hero-dots{left:24px;bottom:48px;}
+  .hero-copy{margin-bottom:96px;}
+  .hero-slide-caption{bottom:80px;left:24px;max-width:calc(100% - 48px);}
   .hero-slide-line{font-size:14px;}
   .hero-dot-btn{cursor:pointer;}
 }
 @media(max-width:480px){
   .hero-hl{font-size:clamp(30px,10vw,48px);}
-  .hero-slide-caption{bottom:84px;left:20px;}
-  .hero-dots{left:20px;bottom:48px;}
+  .hero-copy{margin-bottom:88px;}
+  .hero-slide-caption{bottom:80px;left:20px;}
 }
 /* NAV - scroll-aware */
 nav{transition:background .4s ease,border-color .4s ease;}
@@ -761,23 +759,20 @@ nav.scrolled .nav-hamburger{border-left-color:var(--ink);}
   </div>
 
   <div class="hero-overlay">
-    <div class="hero-overlay-top">
-      <div>
-        <h1 class="hero-hl">
-          Read the category.<br/>
-          <em>Build the edge.</em>
-        </h1>
-        <p class="hero-tagline">Premium commerce for brands whose aesthetic is the product. We dive into your industry - its leaders, its conventions, its blind spots - until we understand it as well as you do. Then we build a storefront that reads native to your world.</p>
+    <div class="hero-copy">
+      <h1 class="hero-hl">
+        Read the category.<br/>
+        <em>Build the edge.</em>
+      </h1>
+      <p class="hero-tagline">Premium commerce for brands whose aesthetic is the product. We dive into your industry - its leaders, its conventions, its blind spots - until we understand it as well as you do. Then we build a storefront that reads native to your world.</p>
+    </div>
+    <div class="hero-bottom-bar">
+      <div class="hero-dots" aria-label="Slide navigation">
+        <button class="hero-dot-btn active" data-dot="0"></button>
+        <button class="hero-dot-btn" data-dot="1"></button>
+        <button class="hero-dot-btn" data-dot="2"></button>
+        <button class="hero-dot-btn" data-dot="3"></button>
       </div>
-      <p class="hero-pov">Bleed is the edge you push past. Margins is the space you protect.</p>
-    </div>
-    <div class="hero-dots" aria-label="Slide navigation">
-      <button class="hero-dot-btn active" data-dot="0"></button>
-      <button class="hero-dot-btn" data-dot="1"></button>
-      <button class="hero-dot-btn" data-dot="2"></button>
-      <button class="hero-dot-btn" data-dot="3"></button>
-    </div>
-    <div class="hero-overlay-bottom">
       <a href="work.html" class="hero-view-cta">See the work →<span class="ul"></span></a>
     </div>
   </div>
