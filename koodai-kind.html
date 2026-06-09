@@ -123,16 +123,6 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
 .d1{transition-delay:.06s;}.d2{transition-delay:.12s;}.d3{transition-delay:.18s;}.d4{transition-delay:.24s;}
-#bindu-loader{position:fixed;inset:0;z-index:99999;background:#1a0e06;display:flex;align-items:center;justify-content:center;transition:opacity .9s ease,visibility .9s ease;}
-#bindu-loader.done{opacity:0;visibility:hidden;pointer-events:none;}
-.bindu-core{position:relative;width:120px;height:120px;display:flex;align-items:center;justify-content:center;}
-.bindu-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;position:relative;z-index:2;}
-.bindu-ring{position:absolute;border-radius:50%;border:1px solid var(--accent);opacity:0;animation:bindu-expand 2.2s ease-out infinite;}
-.bindu-ring:nth-child(1){width:26px;height:26px;animation-delay:0s;}
-.bindu-ring:nth-child(2){width:52px;height:52px;animation-delay:.35s;}
-.bindu-ring:nth-child(3){width:82px;height:82px;animation-delay:.7s;}
-.bindu-ring:nth-child(4){width:116px;height:116px;animation-delay:1.05s;}
-@keyframes bindu-expand{0%{opacity:0.55;transform:scale(0.3);}100%{opacity:0;transform:scale(1);}}
 @media(max-width:900px){
   .cs-hero,.brief-insight,.deliverable,.next-project{grid-template-columns:1fr;}
   .deliverable.flip .del-visual{order:0;}
@@ -206,15 +196,6 @@ img,svg{max-width:100%;height:auto;}
 </style>
 </head>
 <body>
-<div id="bindu-loader">
-  <div class="bindu-core">
-    <div class="bindu-ring"></div>
-    <div class="bindu-ring"></div>
-    <div class="bindu-ring"></div>
-    <div class="bindu-ring"></div>
-    <div class="bindu-dot"></div>
-  </div>
-</div>
 <div class="cursor-dot" id="cd"></div>
 <div class="cursor-ring" id="cr"></div>
 <div class="crop-tl"></div><div class="crop-tr"></div>
@@ -319,7 +300,7 @@ img,svg{max-width:100%;height:auto;}
 <section class="work-section">
   <div class="section-header">
     <h2 class="reveal">The <span class="hl">Work.</span></h2>
-    <span class="sl reveal d2">04 Deliverables</span>
+    <span class="sl reveal d2">03 Deliverables</span>
   </div>
 
   <!-- 01 Shopify Storefront -->
@@ -397,11 +378,13 @@ img,svg{max-width:100%;height:auto;}
       <span class="del-num">02</span>
       <h3 class="del-title">UI/UX — Designed for the Product</h3>
       <p class="del-desc">The product itself is the best thing on every page - so we built a UI that got out of the way and let it lead. Colour selector designed around the vibrancy of the weaves. Photography in context, not on white. Feature callouts that positioned wire construction and spill-resistant lining as engineering, not craft curiosities. Mobile-first, because the person buying a koodai in 2024 is discovering it on their phone.</p>
+      <p class="del-desc" style="margin-top:16px;">The founder came in with one reference outside the brief: S.H. Raza's Bindu. Not a visual reference - a philosophical one. Raza spent four decades painting the bindu, the Sanskrit point of origin - a single concentrated dot from which all form radiates outward. The koodai is made the same way. Every weave starts at a knot. The bag emerges from that point. We built the bindu into the site as a page loader: a dot expanding into concentric rings before the storefront reveals. Presence before commerce. The first thing you feel on koodaikind.com carries the same register as the object itself.</p>
       <div class="del-tags">
         <span class="del-tag">UI/UX Design</span>
         <span class="del-tag">Mobile-First</span>
         <span class="del-tag">Product Experience</span>
         <span class="del-tag">Colour System</span>
+        <span class="del-tag">Motion Design</span>
       </div>
     </div>
     <div class="del-visual" style="background:linear-gradient(160deg,#0a0806,#1a1008);">
@@ -494,34 +477,6 @@ img,svg{max-width:100%;height:auto;}
       </div>
     </div>
   </div>
-
-  <!-- 04 The Bindu -->
-  <div class="deliverable flip">
-    <div class="del-info reveal">
-      <span class="del-num">04</span>
-      <h3 class="del-title">The Bindu</h3>
-      <p class="del-desc">The founder arrived with a single reference: S.H. Raza's Bindu. Not a mood board pull - a conviction. Raza spent the better part of four decades painting the bindu, the Sanskrit point of origin - the concentrated dot from which all form, energy, and presence radiates outward. The koodai is made the same way. Every weave begins at a single knot. The whole form emerges from that point.</p>
-      <p class="del-desc" style="margin-top:16px;">We built it into the site as its opening gesture. A page loader: one dot, four concentric rings expanding from it, slowly, before anything else loads. No wordmark, no logo, no copy. Just presence. The idea was that the first thing you experience on koodaikind.com should carry the same register as the object itself - rooted, unhurried, complete at the centre.</p>
-      <div class="del-tags">
-        <span class="del-tag">Brand Philosophy</span>
-        <span class="del-tag">Motion Design</span>
-        <span class="del-tag">Page Experience</span>
-      </div>
-    </div>
-    <div class="del-visual" style="background:#100b06;">
-      <div class="del-vborder"></div>
-      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:48px;width:100%;height:100%;padding:48px;">
-        <div style="position:relative;width:160px;height:160px;display:flex;align-items:center;justify-content:center;">
-          <div style="position:absolute;width:10px;height:10px;background:var(--accent);border-radius:50%;z-index:2;"></div>
-          <div style="position:absolute;width:36px;height:36px;border:1px solid rgba(214,200,174,0.5);border-radius:50%;animation:bindu-expand 2.2s ease-out infinite;animation-delay:0s;opacity:0;"></div>
-          <div style="position:absolute;width:70px;height:70px;border:1px solid rgba(214,200,174,0.35);border-radius:50%;animation:bindu-expand 2.2s ease-out infinite;animation-delay:.35s;opacity:0;"></div>
-          <div style="position:absolute;width:108px;height:108px;border:1px solid rgba(214,200,174,0.22);border-radius:50%;animation:bindu-expand 2.2s ease-out infinite;animation-delay:.7s;opacity:0;"></div>
-          <div style="position:absolute;width:150px;height:150px;border:1px solid rgba(214,200,174,0.12);border-radius:50%;animation:bindu-expand 2.2s ease-out infinite;animation-delay:1.05s;opacity:0;"></div>
-        </div>
-        <p style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(247,242,232,0.2);text-align:center;">Presence before commerce.</p>
-      </div>
-    </div>
-  </div>
 </section>
 
 <section class="results-section">
@@ -582,7 +537,6 @@ img,svg{max-width:100%;height:auto;}
 </footer>
 
 <script>
-window.addEventListener('load',()=>{setTimeout(()=>{const l=document.getElementById('bindu-loader');if(l)l.classList.add('done');},900);});
 const cd=document.getElementById('cd'),cr=document.getElementById('cr');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px';});
