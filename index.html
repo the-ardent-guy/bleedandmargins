@@ -49,7 +49,7 @@ body:has(a:hover) .cursor-ring,body:has(button:hover) .cursor-ring{width:48px;he
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:stretch;border-bottom:1px solid var(--ink);background:var(--paper);height:64px;}
-.nav-wordmark{text-decoration:none;display:flex;align-items:center;padding:0 24px;border-right:1px solid var(--ink);}
+.nav-wordmark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-decoration:none;display:flex;align-items:center;padding:0 16px;z-index:1;}
 .nav-logo-img{height:26px;width:auto;display:block;}
 .nav-logo-ondark{display:none;}
 nav.over-dark .nav-logo-default{display:none;}
@@ -647,7 +647,6 @@ nav.over-dark{background:rgba(13,11,9,0.85);border-bottom-color:rgba(247,242,232
 nav.over-dark .nav-cta{color:rgba(247,242,232,0.82);}
 nav.over-dark .nav-cta:hover{background:rgba(247,242,232,0.14);color:var(--paper);}
 nav.over-dark{border-bottom:1px solid rgba(247,242,232,0.08);}
-nav.over-dark .nav-wordmark{border-right-color:rgba(247,242,232,0.08);}
 nav.over-dark .nav-cta{border-left-color:rgba(247,242,232,0.08);}
 nav.over-dark .nav-hamburger{border-left-color:rgba(247,242,232,0.08);}
 nav.over-dark .nav-hamburger span{background:rgba(247,242,232,0.82);}
@@ -710,7 +709,6 @@ nav.over-dark .nav-hamburger span{background:rgba(247,242,232,0.82);}
     <img src="bm-logo-light.png" alt="Bleed &amp; Margins" class="nav-logo-img nav-logo-default">
     <img src="bm-logo-dark.png" alt="" class="nav-logo-img nav-logo-ondark" aria-hidden="true">
   </a>
-  <a href="#contact" class="nav-cta">Start a Project</a>
   <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
