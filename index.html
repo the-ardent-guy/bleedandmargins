@@ -51,9 +51,7 @@ body:has(a:hover) .cursor-ring,body:has(button:hover) .cursor-ring{width:48px;he
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:stretch;border-bottom:1px solid var(--ink);background:var(--paper);height:64px;}
 .nav-wordmark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-decoration:none;display:flex;align-items:center;padding:0 16px;z-index:1;}
 .nav-logo-img{height:26px;width:auto;display:block;}
-.nav-logo-img--light{display:none;filter:brightness(0) invert(1);}
-nav.over-dark .nav-logo-img--dark{display:none;}
-nav.over-dark .nav-logo-img--light{display:block;}
+.nav-logo-img--light{display:none;}
 .nav-links{display:flex;list-style:none;border-left:1px solid var(--ink);}
 .nav-links li{border-right:1px solid var(--ink);}
 .nav-links a{display:flex;align-items:center;padding:0 28px;height:100%;font-family:'NHG Text',sans-serif;font-weight:400;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;color:var(--ink);opacity:0.55;transition:opacity .15s,background .15s;}
@@ -703,8 +701,7 @@ nav.over-dark .nav-cta{border-left-color:rgba(247,242,232,0.08);}
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#" class="nav-wordmark">
-    <img src="bm-logo.png" alt="Bleed &amp; Margins" class="nav-logo-img nav-logo-img--dark">
-    <img src="bm-logo.png" alt="" class="nav-logo-img nav-logo-img--light" aria-hidden="true">
+    <img src="bm-logo.png" alt="Bleed &amp; Margins" class="nav-logo-img">
   </a>
   <a href="#contact" class="nav-cta">Start a Project</a>
 </nav>
