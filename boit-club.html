@@ -56,6 +56,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:st
 .nav-wordmark .wm-bot{font-family:'NHG Display',sans-serif;font-weight:500;font-size:13px;color:var(--ink);letter-spacing:0.22em;text-transform:uppercase;line-height:1;}.nav-logo-img{height:34px;width:auto;display:block;}
 .nav-back{display:flex;align-items:center;padding:0 28px;font-family:'NHG Display',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--ink);opacity:0.45;transition:opacity .15s;border-right:1px solid var(--ink);}
 .nav-back:hover{opacity:1;}
+.nav-visit{display:flex;align-items:center;padding:0 28px;font-family:'NHG Display',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-right:1px solid var(--ink);transition:background .15s,color .15s;white-space:nowrap;}
+.nav-visit:hover{background:var(--dim);}
 .nav-cta{margin-left:auto;display:flex;align-items:center;padding:0 28px;border-left:1px solid var(--ink);font-family:'NHG Display',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;color:var(--ink);transition:background .15s,color .15s;white-space:nowrap;}
 .nav-cta:hover{background:var(--ink);color:var(--paper);}
 
@@ -205,6 +207,10 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
 @media(max-width:768px){
   .collab-block{grid-template-columns:1fr;gap:20px;padding:48px 24px;}
 }
+/* MOBILE VISIT BUTTON */
+.visit-btn-mobile{display:none;align-items:center;gap:8px;margin-top:20px;padding:11px 20px;font-family:'NHG Display',sans-serif;font-weight:500;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;color:rgba(247,242,232,0.75);border:1px solid rgba(247,242,232,0.25);width:fit-content;transition:border-color .15s,color .15s;}
+.visit-btn-mobile:hover{border-color:rgba(247,242,232,0.6);color:var(--paper);}
+
 /* ANIMATIONS */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
@@ -248,9 +254,10 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
 @media (max-width: 768px) {
   nav { height: 52px; }
   .nav-wordmark { min-width: auto; padding: 0 16px; }
-  .nav-links { display: none; }
+  .nav-visit { display: none; }
   .nav-back { padding: 0 16px; font-size: 11px; }
   .nav-cta { padding: 0 16px; font-size: 11px; }
+  .visit-btn-mobile { display: inline-flex; }
 }
 
 /* ── HERO - index ── */
@@ -452,6 +459,7 @@ pre, code { overflow-x: auto; }
     <img src="bm-logo.svg" alt="Bleed &amp; Margins" class="nav-logo-img">
   </a>
   <a href="work.html" class="nav-back">← Work</a>
+  <a href="https://www.boit.club" class="nav-visit" target="_blank" rel="noopener noreferrer">Visit Site ↗</a>
   <a href="index.html#contact" class="nav-cta">Start a Project</a>
 </nav>
 
@@ -469,6 +477,7 @@ pre, code { overflow-x: auto; }
         <span class="cs-tag">Registry Design</span>
         <span class="cs-tag">Category Strategy</span>
       </div>
+      <a href="https://www.boit.club" class="visit-btn-mobile" target="_blank" rel="noopener noreferrer">Visit Site ↗</a>
     </div>
   </div>
   <div class="cs-hero-right">
@@ -675,7 +684,7 @@ pre, code { overflow-x: auto; }
   <div class="footer-col">
     <p class="footer-label">Get in Touch</p>
     <div class="footer-contact">
-      <a href="mailto:studio@bleedandmargins.com">studio@bleedandmargins.com</a>
+      <a href="mailto:bleedandmargins@gmail.com">bleedandmargins@gmail.com</a>
       <a href="#">Book a Call →</a>
     </div>
   </div>
