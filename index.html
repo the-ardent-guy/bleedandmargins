@@ -528,6 +528,13 @@ pre, code { overflow-x: auto; }
 .brands-strip{overflow:hidden;padding:64px 0;border-bottom:1px solid var(--ink);}
 .brands-track{display:flex;align-items:center;justify-content:center;gap:80px;padding:0 48px;flex-wrap:wrap;}
 .brands-track img{height:44px;width:auto;object-fit:contain;opacity:0.35;filter:brightness(0);transition:opacity .3s;}
+.brands-track img:nth-child(n+6){display:none;}
+@media(max-width:768px){
+  .brands-strip{padding:40px 0;}
+  .brands-track{animation:brandScroll 14s linear infinite;width:max-content;flex-wrap:nowrap;justify-content:flex-start;gap:56px;padding:0 28px;}
+  .brands-track img:nth-child(n+6){display:block;}
+  .brands-track img{height:36px;}
+}
 .brands-track img:hover{opacity:0.55;}
 
 /* ══ PACKAGES ══ */
@@ -770,6 +777,11 @@ nav.scrolled .nav-hamburger{border-left-color:var(--ink);}
 <p class="proof-caption">Brands we've been in close proximity with.</p>
 <div class="brands-strip">
   <div class="brands-track">
+    <img src="Logos/DMC.png" alt="DMC">
+    <img src="Logos/JW Marriott.png" alt="JW Marriott">
+    <img src="Logos/Obaku.png" alt="Obaku">
+    <img src="Logos/Oxy 99.png" alt="Oxy 99">
+    <img src="Logos/Scuderia Ferrari.png" alt="Scuderia Ferrari">
     <img src="Logos/DMC.png" alt="DMC">
     <img src="Logos/JW Marriott.png" alt="JW Marriott">
     <img src="Logos/Obaku.png" alt="Obaku">
