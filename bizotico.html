@@ -33,9 +33,13 @@ body:has(a:hover) .cursor-ring{width:48px;height:48px;opacity:1;}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:stretch;border-bottom:1px solid var(--ink);background:var(--paper);height:64px;}
-.nav-wordmark{text-decoration:none;display:flex;flex-direction:column;justify-content:center;line-height:1;gap:0;padding:0 24px;border-right:1px solid var(--ink);min-width:140px;}
-.nav-wordmark .wm-top{font-family:'NHG Text',sans-serif;font-size:18px;color:var(--ink);line-height:1.05;}
-.nav-wordmark .wm-bot{font-family:'NHG Display',sans-serif;font-weight:900;font-size:13px;color:var(--ink);letter-spacing:0.22em;text-transform:uppercase;line-height:1;}.nav-logo-img{height:34px;width:auto;display:block;}
+.nav-left{display:flex;align-items:stretch;}
+.nav-back{display:flex;align-items:center;padding:0 20px;border-right:1px solid var(--ink);font-family:'NHG Text',sans-serif;font-weight:400;font-size:11px;letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;color:var(--ink);white-space:nowrap;transition:background .15s;}
+.nav-back:hover{background:rgba(26,21,16,0.04);}
+.nav-visit{display:flex;align-items:center;padding:0 20px;border-right:1px solid var(--ink);font-family:'NHG Text',sans-serif;font-weight:400;font-size:11px;letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;color:var(--ink);white-space:nowrap;transition:background .15s;}
+.nav-visit:hover{background:rgba(26,21,16,0.04);}
+.nav-wordmark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-decoration:none;display:flex;align-items:center;z-index:1;}
+.nav-logo-img{height:26px;width:auto;display:block;}
 .nav-hamburger{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:0 20px;height:100%;background:none;border:none;border-left:1px solid var(--ink);cursor:pointer;margin-left:auto;}
 .nav-hamburger span{display:block;width:18px;height:1.5px;background:var(--ink);transition:transform .25s,opacity .25s;}
 .nav-hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
@@ -176,10 +180,7 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
   footer{grid-template-columns:1fr;}
   .footer-col{border-right:none;border-bottom:1px solid rgba(247,242,232,0.1);}
 }
-@media(max-width:768px){.nav-drawer{top:48px;transform:translateY(calc(-100% - 52px));}.nav-logo-img{height:24px;}
-  .nav-wordmark{padding:0 16px;min-width:auto;}
-  .nav-back,
-  
+@media(max-width:768px){.nav-drawer{top:52px;transform:translateY(calc(-100% - 56px));}.nav-logo-img{height:20px;}
   .visit-btn-mobile{display:inline-flex;}
   .cs-hero-left,.cs-hero-right{padding:48px 24px;}
   .field-header,.work-section-header,.results-header{padding:40px 24px 28px;}
@@ -201,10 +202,8 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
 /* ── NAV mobile ── */
 @media (max-width: 768px) {
   nav { height: 52px; }
-  .nav-wordmark { min-width: auto; padding: 0 16px; }
-  .nav-links { display: none; }
-  .nav-back { padding: 0 16px; font-size: 11px; }
-  .nav-cta { padding: 0 16px; font-size: 11px; }
+  .nav-back { padding: 0 12px; font-size: 10px; }
+  .nav-visit { padding: 0 12px; font-size: 10px; }
 }
 
 /* ── HERO — index ── */
@@ -398,6 +397,10 @@ pre, code { overflow-x: auto; }
 <div class="crop-bl"></div><div class="crop-br"></div>
 
 <nav>
+  <div class="nav-left">
+    <a href="work.html" class="nav-back">← Work</a>
+    <a href="https://www.thetimekeepers.com" class="nav-visit" target="_blank" rel="noopener noreferrer">Visit ↗</a>
+  </div>
   <a href="index.html" class="nav-wordmark">
     <img src="bm-logo-light.png" alt="Bleed &amp; Margins" class="nav-logo-img">
   </a>

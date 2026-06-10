@@ -527,9 +527,9 @@ pre, code { overflow-x: auto; }
 /* ══ BRANDS STRIP ══ */
 .brands-strip{overflow:hidden;padding:22px 0;border-bottom:1px solid var(--ink);}
 .brands-track{display:flex;align-items:center;gap:64px;animation:brandScroll 20s linear infinite;width:max-content;padding:0 32px;}
-.brands-track img{height:26px;width:auto;object-fit:contain;opacity:0.45;filter:grayscale(1);transition:opacity .3s;}
+.brands-track img{height:26px;width:auto;object-fit:contain;opacity:0.55;filter:brightness(0);transition:opacity .3s;}
 .brands-track img[alt="JW Marriott"],.brands-track img[alt="Obaku"]{height:32px;}
-.brands-track img:hover{opacity:0.55;}
+.brands-track img:hover{opacity:0.75;}
 
 /* ══ PACKAGES ══ */
 .packages-grid{display:grid;grid-template-columns:repeat(3,1fr);}
@@ -610,7 +610,7 @@ pre, code { overflow-x: auto; }
 .eng-name em{font-family:'JetBrains Mono',monospace;font-style:normal;font-weight:400;font-size:0.38em;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;display:inline-block;margin-left:12px;vertical-align:middle;}
 .eng-desc{font-family:'NHG Text',sans-serif;font-size:16px;line-height:1.72;color:var(--muted);}
 .eng-detail{padding-top:6px;}
-.eng-footer{padding:64px 72px;display:flex;justify-content:flex-start;border-top:1px solid var(--ink);}
+.eng-footer{padding:64px 72px;display:flex;justify-content:flex-start;}
 @media(max-width:1100px){
   .engagement{grid-template-columns:64px 1fr;}
   .eng-detail{grid-column:2;padding-top:20px;}
@@ -755,7 +755,7 @@ nav.scrolled .nav-hamburger{border-left-color:var(--ink);}
         Read the category.<br/>
         <em>Build the edge.</em>
       </h1>
-      <p class="hero-tagline">Premium commerce for brands whose aesthetic is the product. We dive into your industry - its leaders, its conventions, its blind spots - until we understand it as well as you do. Then we build a storefront that reads native to your world.</p>
+      <p class="hero-tagline">...until we understand it as well as you do. Then we build an experience that reads native to your world.</p>
     </div>
     <div class="hero-bottom-bar">
       <div class="hero-dots" aria-label="Slide navigation">
@@ -787,11 +787,11 @@ nav.scrolled .nav-hamburger{border-left-color:var(--ink);}
 <div class="marquee-strip">
   <div class="marquee-inner">
     <span>Premium commerce</span><span class="dot"> · </span><span>Category-native design</span><span class="dot"> · </span>
-    <span>Shopify</span><span class="dot"> · </span><span>Worldwide</span><span class="dot"> · </span>
-    <span>Worldwide</span><span class="dot"> · </span><span>Bleed &amp; Margins</span><span class="dot"> · </span>
+    <span>Shopify</span><span class="dot"> · </span><span>AI Automations</span><span class="dot"> · </span>
+    <span>AI Automations</span><span class="dot"> · </span><span>Bleed &amp; Margins</span><span class="dot"> · </span>
     <span>Premium commerce</span><span class="dot"> · </span><span>Category-native design</span><span class="dot"> · </span>
-    <span>Shopify</span><span class="dot"> · </span><span>Worldwide</span><span class="dot"> · </span>
-    <span>Worldwide</span><span class="dot"> · </span><span>Bleed &amp; Margins</span><span class="dot"> · </span>
+    <span>Shopify</span><span class="dot"> · </span><span>AI Automations</span><span class="dot"> · </span>
+    <span>AI Automations</span><span class="dot"> · </span><span>Bleed &amp; Margins</span><span class="dot"> · </span>
   </div>
 </div>
 
@@ -808,8 +808,8 @@ nav.scrolled .nav-hamburger{border-left-color:var(--ink);}
 <section id="services">
   <div class="section-header">
     <h2 class="reveal"><em>What we do.</em></h2>
-    <span class="sh-label reveal d2">03 Ways in</span>
-    <p class="sh-intro reveal d3">We work with premium and design-led brands on commerce that needs to perform without looking like everything else. Three ways in. Each scoped tight, priced clearly, delivered fast.</p>
+    <span class="sh-label reveal d2">04 Ways in</span>
+    <p class="sh-intro reveal d3">We work with premium and design-led brands on commerce that needs to perform without looking like everything else.</p>
   </div>
   <div class="engagements">
 
@@ -861,8 +861,23 @@ nav.scrolled .nav-hamburger{border-left-color:var(--ink);}
       </div>
     </div>
 
+    <div class="engagement reveal d3">
+      <span class="eng-num">04</span>
+      <div class="eng-main">
+        <h3 class="eng-name">Commerce Automation</h3>
+        <p class="eng-desc">If your team is manually handling what could run on its own - email flows, inventory syncs, fulfillment triggers, analytics reporting - we build the backend systems that take it off the list. Shopify Flow, third-party integrations, custom logic. Scoped as a standalone or layered into a build.</p>
+      </div>
+      <div class="eng-detail">
+        <div class="package-tags">
+          <span class="package-tag">Shopify Flow</span>
+          <span class="package-tag">Email Automations</span>
+          <span class="package-tag">Integrations</span>
+          <span class="package-tag">Analytics Pipelines</span>
+        </div>
+      </div>
+    </div>
+
   </div>
-  <p class="eng-tail reveal">Each engagement: fixed scope, fixed price, fast delivery. No retainers. No scope creep. No re-explaining the brief.</p>
   <div class="eng-footer reveal">
     <a href="#contact" class="btn-accent">Start a conversation →</a>
   </div>
@@ -876,8 +891,8 @@ nav.scrolled .nav-hamburger{border-left-color:var(--ink);}
       <a href="work.html" class="work-all reveal d2">View All <span class="ul"></span></a>
     </div>
   </div>
-  <div style="padding:0 56px 48px;border-bottom:1px solid var(--ink);">
-    <p style="font-family:'NHG Text',sans-serif;font-style:normal;font-weight:300;font-size:clamp(17px,1.6vw,22px);color:var(--muted);line-height:1.6;max-width:600px;" class="reveal">Five briefs. Five categories. Five times we read the room before touching Figma.</p>
+  <div style="padding:0 56px 48px;border-bottom:1px solid var(--ink);text-align:center;">
+    <p style="font-family:'NHG Text',sans-serif;font-style:normal;font-weight:300;font-size:clamp(17px,1.6vw,22px);color:var(--muted);line-height:1.6;" class="reveal">Five times we read the room before touching Figma.</p>
   </div>
 
   <div class="case-study vist reveal">
