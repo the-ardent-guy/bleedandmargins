@@ -119,8 +119,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:st
 .deliverable.flip .del-vborder{border-right:none;border-left:1px solid rgba(247,242,232,0.08);}
 .del-info{padding:72px;display:flex;flex-direction:column;justify-content:center;gap:20px;background:var(--paper);}
 .del-num{font-family:'NHG Display',sans-serif;font-weight:500;font-size:64px;color:rgba(26,21,16,0.05);line-height:1;display:block;margin-bottom:-8px;}
-.del-title{font-family:'NHG Display',sans-serif;font-weight:500;font-size:clamp(32px,3.8vw,56px);text-transform:uppercase;line-height:0.9;letter-spacing:-0.01em;}
-.del-desc{font-family:'NHG Text',sans-serif;font-size:16px;line-height:1.75;color:var(--muted);max-width:420px;}
+.del-title{font-family:'NHG Display',sans-serif;font-weight:500;font-size:clamp(32px,3.8vw,56px);text-transform:uppercase;line-height:0.9;letter-spacing:-0.01em;overflow-wrap:break-word;}
+.del-desc{font-family:'NHG Text',sans-serif;font-size:16px;line-height:1.75;color:var(--muted);max-width:420px;overflow-wrap:break-word;}
 .del-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
 .del-tag{font-size:8px;letter-spacing:0.12em;text-transform:uppercase;border:1px solid var(--border);padding:4px 9px;color:var(--muted);}
 
@@ -211,7 +211,7 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
   .deliverable{grid-template-columns:1fr;}
   .deliverable.flip .del-visual{order:0;}
   .del-visual{min-height:60vw;}
-  .del-info{padding:40px 24px;}
+  .del-info{padding:40px 40px 40px 24px;}
   .del-title{font-size:clamp(26px,8vw,40px);}
   .results-grid{grid-template-columns:1fr;}
   .result-block{border-right:none !important;border-bottom:1px solid rgba(247,242,232,0.1);padding:40px 24px;}

@@ -100,8 +100,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:st
 .deliverable.flip .del-vborder{border-right:none;border-left:1px solid var(--ink);}
 .del-info{padding:72px;display:flex;flex-direction:column;justify-content:center;gap:20px;background:var(--paper);}
 .del-num{font-family:'NHG Display',sans-serif;font-weight:900;font-size:64px;color:rgba(26,21,16,0.06);line-height:1;display:block;margin-bottom:-8px;}
-.del-title{font-family:'NHG Display',sans-serif;font-weight:900;font-size:clamp(32px,3.8vw,56px);text-transform:uppercase;line-height:0.9;letter-spacing:-0.01em;}
-.del-desc{font-family:'NHG Text',sans-serif;font-size:16px;line-height:1.75;color:var(--muted);max-width:420px;}
+.del-title{font-family:'NHG Display',sans-serif;font-weight:900;font-size:clamp(32px,3.8vw,56px);text-transform:uppercase;line-height:0.9;letter-spacing:-0.01em;overflow-wrap:break-word;}
+.del-desc{font-family:'NHG Text',sans-serif;font-size:16px;line-height:1.75;color:var(--muted);max-width:420px;overflow-wrap:break-word;}
 .del-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
 .del-tag{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;border:1px solid var(--border);padding:4px 9px;color:var(--muted);}
 
@@ -416,7 +416,7 @@ pre, code { overflow-x: auto; }
     <div class="cs-stats">
       <div class="cs-stat reveal d1">
         <span class="cs-stat-num">7.85</span>
-        <span class="cs-stat-label">ROAS on Meta Ads — ₹53K in, ₹4.16L out</span>
+        <span class="cs-stat-label">ROAS on Meta Ads: ₹53K in, ₹4.16L out</span>
       </div>
       <div class="cs-stat reveal d2">
         <span class="cs-stat-num">25+</span>
@@ -424,11 +424,11 @@ pre, code { overflow-x: auto; }
       </div>
       <div class="cs-stat reveal d3">
         <span class="cs-stat-num">600+</span>
-        <span class="cs-stat-label">Retail stores — legacy we had to honour digitally</span>
+        <span class="cs-stat-label">Retail stores: legacy we had to honour digitally</span>
       </div>
       <div class="cs-stat reveal d4">
         <span class="cs-stat-num">Full</span>
-        <span class="cs-stat-label">Stack — Branding → Shopify → Content → Ads</span>
+        <span class="cs-stat-label">Stack: Branding → Shopify → Content → Ads</span>
       </div>
     </div>
   </div>
@@ -440,23 +440,23 @@ pre, code { overflow-x: auto; }
     <span class="field-label reveal d2">What we found</span>
   </div>
   <div class="field-intro reveal">
-    <p>India's watch market hit $3.2 billion in 2024 and is heading to $5.1 billion by 2033. Swiss watch imports surged 39.5% — the clearest signal yet that Indian consumers are trading up. But the luxury end of this market has a paradox: the demand is digital, and the supply chain is still entirely offline.</p>
+    <p>India's watch market hit $3.2 billion in 2024 and is heading to $5.1 billion by 2033. Swiss watch imports surged 39.5%, the clearest signal yet that Indian consumers are trading up. But the luxury end of this market has a paradox: the demand is digital, and the supply chain is still entirely offline.</p>
   </div>
   <div class="field-finds">
     <div class="field-find reveal d1">
       <span class="find-num">01</span>
       <span class="find-stat">70% of Indian consumers now buy watches online.</span>
-      <p class="find-desc">Deloitte's Swiss Watch Insights 2024 found that 70% of Indian consumers purchase watches through online retailers or brand websites. The market shifted online — but established distributors with deep physical roots hadn't followed. Legacy meant nothing if it wasn't discoverable.</p>
+      <p class="find-desc">Deloitte's Swiss Watch Insights 2024 found that 70% of Indian consumers purchase watches through online retailers or brand websites. The market shifted online, but established distributors with deep physical roots hadn't followed. Legacy meant nothing if it wasn't discoverable.</p>
     </div>
     <div class="field-find reveal d2">
       <span class="find-num">02</span>
       <span class="find-stat">eCommerce in luxury watches is the most underdeveloped channel globally.</span>
-      <p class="find-desc">Statista identifies luxury watch eCommerce as comparatively underdeveloped despite high growth potential — because legacy brands resist digital out of fear of losing control of their prestige narrative. The brands that cracked it built digital experiences that felt as considered as a physical boutique.</p>
+      <p class="find-desc">Statista identifies luxury watch eCommerce as comparatively underdeveloped despite high growth potential, because legacy brands resist digital out of fear of losing control of their prestige narrative. The brands that cracked it built digital experiences that felt as considered as a physical boutique.</p>
     </div>
     <div class="field-find reveal d3">
       <span class="find-num">03</span>
-      <span class="find-stat">1 in 5 Indians now view luxury watches as an investment — not a purchase.</span>
-      <p class="find-desc">In Deloitte's survey, one in five Indian consumers cited investment value as a reason to buy a luxury watch — a higher rate than the global average. This changes the creative brief entirely: you're not selling a product, you're selling a decision that will look smart in five years.</p>
+      <span class="find-stat">1 in 5 Indians now view luxury watches as an investment: not a purchase.</span>
+      <p class="find-desc">In Deloitte's survey, one in five Indian consumers cited investment value as a reason to buy a luxury watch, a higher rate than the global average. This changes the creative brief entirely: you're not selling a product, you're selling a decision that will look smart in five years.</p>
     </div>
   </div>
 </section>
@@ -466,16 +466,16 @@ pre, code { overflow-x: auto; }
     <span class="col-label">The Brief</span>
     <h3 class="col-heading">A 25-year-old business that needed to exist online.</h3>
     <div class="col-body">
-      <p>Bizotico came to us as one of India's largest luxury watch distributors — Roamer, Earnshaw, Obaku, Mazzucato, NSquare and 20 more international brands under one roof, 600+ retail partner stores, 25 years of trade relationships. A formidable offline business that had built everything except a digital presence.</p>
-      <p>The brief: bring this legacy online and make it look world-class. We started by mapping the portfolio — 25+ brands, each with its own positioning — then built an ecommerce system, a content engine, and a paid ads strategy from scratch, without diluting the prestige of a single brand they distributed.</p>
+      <p>Bizotico came to us as one of India's largest luxury watch distributors, Roamer, Earnshaw, Obaku, Mazzucato, NSquare and 20 more international brands under one roof, 600+ retail partner stores, 25 years of trade relationships. A formidable offline business that had built everything except a digital presence.</p>
+      <p>The brief: bring this legacy online and make it look world-class. We started by mapping the portfolio, 25+ brands, each with its own positioning, then built an ecommerce system, a content engine, and a paid ads strategy from scratch, without diluting the prestige of a single brand they distributed.</p>
     </div>
   </div>
   <div class="insight-col reveal d2">
     <span class="col-label">The Insight</span>
     <h3 class="col-heading" style="color:var(--paper);">Legacy is the asset. Digital is just the address.</h3>
     <div class="col-body">
-      <p>Most agencies building an ecommerce site for a legacy brand start with the platform. We started with the story. 25 years of trade relationships. 600 retail stores. Swiss-made heritage. These weren't footnotes — they were the entire reason a buyer should trust Bizotico over a marketplace listing.</p>
-      <p>So we didn't try to make Bizotico look like a startup. We made 25 years of expertise feel alive online — in the photography, the product copy, the ad targeting, and the store design. Prestige doesn't need to shout. It needs to be consistent.</p>
+      <p>Most agencies building an ecommerce site for a legacy brand start with the platform. We started with the story. 25 years of trade relationships. 600 retail stores. Swiss-made heritage. These weren't footnotes, they were the entire reason a buyer should trust Bizotico over a marketplace listing.</p>
+      <p>So we didn't try to make Bizotico look like a startup. We made 25 years of expertise feel alive online, in the photography, the product copy, the ad targeting, and the store design. Prestige doesn't need to shout. It needs to be consistent.</p>
     </div>
     <div class="insight-pull">Legacy is the<br/>moat. We just<br/>made it visible.</div>
   </div>
@@ -494,8 +494,8 @@ pre, code { overflow-x: auto; }
     </div>
     <div class="del-info reveal">
       <span class="del-num">01</span>
-      <h3 class="del-title">Shopify Ecommerce — Watches That Sell Online</h3>
-      <p class="del-desc">Built a conversion-focused Shopify store that matched the prestige of the watches it sold. Sleek, fast, mobile-first — because 70% of their buyers are on their phones. Every product page designed to make a ₹20,000 watch feel like a considered decision, not a cart item.</p>
+      <h3 class="del-title">Shopify Ecommerce: Watches That Sell Online</h3>
+      <p class="del-desc">Built a conversion-focused Shopify store that matched the prestige of the watches it sold. Sleek, fast, mobile-first, because 70% of their buyers are on their phones. Every product page designed to make a ₹20,000 watch feel like a considered decision, not a cart item.</p>
       <div class="del-tags">
         <span class="del-tag">Shopify Development</span>
         <span class="del-tag">UI/UX Design</span>
@@ -512,8 +512,8 @@ pre, code { overflow-x: auto; }
     </div>
     <div class="del-info reveal">
       <span class="del-num">02</span>
-      <h3 class="del-title">Performance Ads — 7.85 ROAS</h3>
-      <p class="del-desc">Ran full Meta Ads campaigns targeted at affluent professionals aged 30–55 across Mumbai, Delhi, Chennai, Kolkata, and Bengaluru. ₹53,000 in ad spend returned ₹4,16,131 in net sales — a 7.85 ROAS. Audience built around luxury goods interest, Swiss watch affinity, and high household income signals.</p>
+      <h3 class="del-title">Performance Ads: 7.85 ROAS</h3>
+      <p class="del-desc">Ran full Meta Ads campaigns targeted at affluent professionals aged 30–55 across Mumbai, Delhi, Chennai, Kolkata, and Bengaluru. ₹53,000 in ad spend returned ₹4,16,131 in net sales, a 7.85 ROAS. Audience built around luxury goods interest, Swiss watch affinity, and high household income signals.</p>
       <div class="del-tags">
         <span class="del-tag">Meta Ads</span>
         <span class="del-tag">Audience Strategy</span>
@@ -531,7 +531,7 @@ pre, code { overflow-x: auto; }
     <div class="del-info reveal">
       <span class="del-num">03</span>
       <h3 class="del-title">Scroll-Stopping Product Content</h3>
-      <p class="del-desc">Shot and produced high-conversion content — reels, product shorts, and thumb-stoppers — all created to match the luxury tone of the watches. Dark staging, close-up details, cinematic cuts. The kind of content that makes someone stop mid-scroll and look twice.</p>
+      <p class="del-desc">Shot and produced high-conversion content, reels, product shorts, and thumb-stoppers, all created to match the luxury tone of the watches. Dark staging, close-up details, cinematic cuts. The kind of content that makes someone stop mid-scroll and look twice.</p>
       <div class="del-tags">
         <span class="del-tag">Product Photography</span>
         <span class="del-tag">Video Production</span>
@@ -555,7 +555,7 @@ pre, code { overflow-x: auto; }
     <div class="result-block reveal d2">
       <span class="result-num">25+</span>
       <span class="result-label">Brands digitised</span>
-      <p class="result-desc">Each brand given its own digital identity and product presence under the Bizotico umbrella — from Roamer to NSquare to Tsar Bomba.</p>
+      <p class="result-desc">Each brand given its own digital identity and product presence under the Bizotico umbrella, from Roamer to NSquare to Tsar Bomba.</p>
     </div>
     <div class="result-block reveal d3">
       <span class="result-num">Full</span>
@@ -565,7 +565,7 @@ pre, code { overflow-x: auto; }
     <div class="result-block reveal d4">
       <span class="result-num">0→1</span>
       <span class="result-label">Digital revenue channel</span>
-      <p class="result-desc">A business that existed entirely offline now has a working ecommerce revenue stream — built, optimised, and scaling.</p>
+      <p class="result-desc">A business that existed entirely offline now has a working ecommerce revenue stream, built, optimised, and scaling.</p>
     </div>
   </div>
 </section>

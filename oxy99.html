@@ -87,8 +87,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:st
 .deliverable.flip .del-vborder{border-right:none;border-left:1px solid var(--ink);}
 .del-info{padding:72px;display:flex;flex-direction:column;justify-content:center;gap:20px;background:var(--paper);}
 .del-num{font-family:'NHG Display',sans-serif;font-weight:300;font-size:64px;color:rgba(26,21,16,0.05);line-height:1;display:block;margin-bottom:-8px;}
-.del-title{font-family:'NHG Display',sans-serif;font-weight:500;font-size:clamp(32px,3.8vw,56px);text-transform:uppercase;line-height:0.9;letter-spacing:-0.01em;}
-.del-desc{font-family:'NHG Text',sans-serif;font-size:16px;line-height:1.75;color:var(--muted);max-width:420px;}
+.del-title{font-family:'NHG Display',sans-serif;font-weight:500;font-size:clamp(32px,3.8vw,56px);text-transform:uppercase;line-height:0.9;letter-spacing:-0.01em;overflow-wrap:break-word;}
+.del-desc{font-family:'NHG Text',sans-serif;font-size:16px;line-height:1.75;color:var(--muted);max-width:420px;overflow-wrap:break-word;}
 .del-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
 .del-tag{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;border:1px solid var(--border);padding:4px 9px;color:var(--muted);}
 .results-section{background:#000;border-bottom:1px solid rgba(247,242,232,0.08);}
@@ -160,7 +160,7 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
   .deliverable{grid-template-columns:1fr;}
   .deliverable.flip .del-visual{order:0;}
   .del-visual{min-height:60vw;}
-  .del-info{padding:40px 24px;}
+  .del-info{padding:40px 40px 40px 24px;}
   .del-title{font-size:clamp(28px,8vw,44px);}
   .del-desc{font-size:15px;}
   .del-vborder{border-right:none!important;border-left:none!important;border-bottom:1px solid var(--border);}
@@ -230,7 +230,7 @@ img,svg{max-width:100%;height:auto;}
     <div class="cs-stats">
       <div class="cs-stat reveal d1">
         <span class="cs-stat-num">1991</span>
-        <span class="cs-stat-label">Since — backed by ING. L & A BOSCHI Italian air separation technology</span>
+        <span class="cs-stat-label">Since: backed by ING. L & A BOSCHI Italian air separation technology</span>
       </div>
       <div class="cs-stat reveal d2">
         <span class="cs-stat-num">#1</span>
@@ -238,11 +238,11 @@ img,svg{max-width:100%;height:auto;}
       </div>
       <div class="cs-stat reveal d3">
         <span class="cs-stat-num">Dual</span>
-        <span class="cs-stat-label">Channel — Google Ads + Swiggy Instamart for last-mile reach</span>
+        <span class="cs-stat-label">Channel: Google Ads + Swiggy Instamart for last-mile reach</span>
       </div>
       <div class="cs-stat reveal d4">
         <span class="cs-stat-num">High</span>
-        <span class="cs-stat-label">ROAS — performance campaigns that consistently delivered</span>
+        <span class="cs-stat-label">ROAS: performance campaigns that consistently delivered</span>
       </div>
     </div>
   </div>
@@ -352,7 +352,7 @@ img,svg{max-width:100%;height:auto;}
     </div>
     <div class="result-block reveal d3">
       <span class="result-num">Minutes</span>
-      <span class="result-label">Delivery — Swiggy Instamart integration</span>
+      <span class="result-label">Delivery: Swiggy Instamart integration</span>
       <p class="result-desc">Emergency oxygen, available in the time it takes to make a cup of tea. Distribution as a brand promise, not just a logistics footnote.</p>
     </div>
   </div>

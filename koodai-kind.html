@@ -88,8 +88,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:st
 .deliverable.flip .del-vborder{border-right:none;border-left:1px solid var(--ink);}
 .del-info{padding:72px;display:flex;flex-direction:column;justify-content:center;gap:20px;background:var(--paper);}
 .del-num{font-family:'NHG Display',sans-serif;font-weight:300;font-size:64px;color:rgba(26,21,16,0.05);line-height:1;display:block;margin-bottom:-8px;}
-.del-title{font-family:'NHG Display',sans-serif;font-weight:500;font-size:clamp(32px,3.8vw,56px);text-transform:uppercase;line-height:0.9;letter-spacing:-0.01em;}
-.del-desc{font-family:'NHG Text',sans-serif;font-size:16px;line-height:1.75;color:var(--muted);max-width:420px;}
+.del-title{font-family:'NHG Display',sans-serif;font-weight:500;font-size:clamp(32px,3.8vw,56px);text-transform:uppercase;line-height:0.9;letter-spacing:-0.01em;overflow-wrap:break-word;}
+.del-desc{font-family:'NHG Text',sans-serif;font-size:16px;line-height:1.75;color:var(--muted);max-width:420px;overflow-wrap:break-word;}
 .del-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
 .del-tag{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;border:1px solid var(--border);padding:4px 9px;color:var(--muted);}
 .del-link{display:inline-flex;flex-direction:column;gap:4px;font-family:'NHG Display',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--ink);margin-top:4px;align-self:flex-start;}
@@ -163,7 +163,7 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
   .deliverable{grid-template-columns:1fr;}
   .deliverable.flip .del-visual{order:0;}
   .del-visual{min-height:60vw;}
-  .del-info{padding:40px 24px;}
+  .del-info{padding:40px 40px 40px 24px;}
   .del-title{font-size:clamp(28px,8vw,44px);}
   .del-desc{font-size:15px;}
   .del-vborder{border-right:none!important;border-left:none!important;border-bottom:1px solid var(--border);}
@@ -238,15 +238,15 @@ img,svg{max-width:100%;height:auto;}
       </div>
       <div class="cs-stat reveal d2">
         <span class="cs-stat-num">Elle</span>
-        <span class="cs-stat-label">India called the koodai "global fashion's latest fascination" — Nov 2025</span>
+        <span class="cs-stat-label">India called the koodai "global fashion's latest fascination": Nov 2025</span>
       </div>
       <div class="cs-stat reveal d3">
         <span class="cs-stat-num">Born</span>
-        <span class="cs-stat-label">On roadside verandahs. Built for rooftops, markets, offices — now.</span>
+        <span class="cs-stat-label">On roadside verandahs. Built for rooftops, markets, offices: now.</span>
       </div>
       <div class="cs-stat reveal d4">
         <span class="cs-stat-num">Live</span>
-        <span class="cs-stat-label">koodaikind.com — Shopify storefront, UI/UX, campaign photography</span>
+        <span class="cs-stat-label">koodaikind.com: Shopify storefront, UI/UX, campaign photography</span>
       </div>
     </div>
   </div>
@@ -258,7 +258,7 @@ img,svg{max-width:100%;height:auto;}
     <span class="sl reveal d2">What the culture told us</span>
   </div>
   <div class="field-intro reveal">
-    <p>The koodai — wire-woven, plastic-tape, made on verandahs across Tamil Nadu — was never designed. It was just made. By women who needed something durable, light, packable, and functional. It solved a problem so well that it became ubiquitous. Then it disappeared from cultural view — not because it stopped being good, but because "good" and "cool" stopped overlapping for a generation. That gap is exactly where Koodai Kind lives.</p>
+    <p>The koodai, wire-woven, plastic-tape, made on verandahs across Tamil Nadu, was never designed. It was just made. By women who needed something durable, light, packable, and functional. It solved a problem so well that it became ubiquitous. Then it disappeared from cultural view, not because it stopped being good, but because "good" and "cool" stopped overlapping for a generation. That gap is exactly where Koodai Kind lives.</p>
   </div>
   <div class="field-finds">
     <div class="field-find reveal d1">
@@ -268,7 +268,7 @@ img,svg{max-width:100%;height:auto;}
     </div>
     <div class="field-find reveal d2">
       <span class="find-num">02</span>
-      <span class="find-stat">Every brand doing "Indian craft" was making the same mistake — leading with the past.</span>
+      <span class="find-stat">Every brand doing "Indian craft" was making the same mistake: leading with the past.</span>
       <p class="find-desc">The dominant narrative in the Indian heritage craft space was guilt-and-pride: buy this because artisans need saving, because traditions are dying, because you should feel good about it. It was effective. It was also deeply patronising: to the craft, to the buyer, and to the object. The koodai doesn't need charity. It needs confidence. It already has the design credentials. It already has the functionality. It just needed a brand brave enough to show it without apology.</p>
     </div>
     <div class="field-find reveal d3">
@@ -284,8 +284,8 @@ img,svg{max-width:100%;height:auto;}
     <span class="col-label">The Brief</span>
     <h3 class="col-heading">Make the koodai a contemporary object. Not a cultural artefact.</h3>
     <div class="col-body">
-      <p>Koodai Kind came with a clear instinct: the bag is bold, functional, and modern — and most brands in the space were burying it under nostalgia. Wire-woven, spill-resistant, lightweight, made with artistry. These are design credentials. The brief was to build a storefront and campaign around those credentials — without once leaning on the heritage angle as a selling point.</p>
-      <p>The deliverables were Shopify build, UI/UX, and campaign photography. But the real task was simpler: make the koodai as shoppable and desirable as any contemporary product. No market scenes. No artisan close-ups. The bag going where people actually go — and belonging there.</p>
+      <p>Koodai Kind came with a clear instinct: the bag is bold, functional, and modern, and most brands in the space were burying it under nostalgia. Wire-woven, spill-resistant, lightweight, made with artistry. These are design credentials. The brief was to build a storefront and campaign around those credentials, without once leaning on the heritage angle as a selling point.</p>
+      <p>The deliverables were Shopify build, UI/UX, and campaign photography. But the real task was simpler: make the koodai as shoppable and desirable as any contemporary product. No market scenes. No artisan close-ups. The bag going where people actually go, and belonging there.</p>
     </div>
   </div>
   <div class="insight-col reveal d2">
@@ -313,7 +313,7 @@ img,svg{max-width:100%;height:auto;}
     </div>
     <div class="del-info reveal">
       <span class="del-num">01</span>
-      <h3 class="del-title">Shopify Storefront — koodaikind.com</h3>
+      <h3 class="del-title">Shopify Storefront: koodaikind.com</h3>
       <p class="del-desc">Built a storefront that matched the confidence of the campaign. No craft-market aesthetic, no earthy-toned heritage signalling. Clean, editorial, direct - the same visual language you'd bring to any genuinely desirable product. Product pages led with how the bag looks in use, with material and functional detail secondary. The spill-resistant inner lining and wire-woven structure positioned as design features, not craft footnotes.</p>
       <div class="del-tags">
         <span class="del-tag">Shopify Development</span>
@@ -331,7 +331,7 @@ img,svg{max-width:100%;height:auto;}
   <div class="deliverable flip">
     <div class="del-info reveal">
       <span class="del-num">02</span>
-      <h3 class="del-title">UI/UX — Designed for the Product</h3>
+      <h3 class="del-title">UI/UX: Designed for the Product</h3>
       <p class="del-desc">The product itself is the best thing on every page, so we built a UI that got out of the way and let it lead. Colour selector designed around the vibrancy of the weaves. Photography in context, not on white. Feature callouts that positioned wire construction and spill-resistant lining as engineering, not craft curiosities. Mobile-first, because the person buying a koodai in 2024 is discovering it on their phone.</p>
       <p class="del-desc" style="margin-top:16px;">The founder came in with one reference outside the brief: S.H. Raza's Bindu. Not a visual reference - a philosophical one. Raza spent four decades painting the bindu, the Sanskrit point of origin - a single concentrated dot from which all form radiates outward. The koodai is made the same way. Every weave starts at a knot. The bag emerges from that point. We built the bindu into the site as a page loader: a dot expanding into concentric rings before the storefront reveals. Presence before commerce. The first thing you feel on koodaikind.com carries the same register as the object itself.</p>
       <div class="del-tags">
@@ -417,7 +417,7 @@ img,svg{max-width:100%;height:auto;}
     <div class="result-block reveal d1">
       <span class="result-num">Live</span>
       <span class="result-label">Full Shopify storefront and campaign</span>
-      <p class="result-desc">koodaikind.com — built, shot, and launched. A complete commercial presence for a product that was ready for one long before the brand was.</p>
+      <p class="result-desc">koodaikind.com, built, shot, and launched. A complete commercial presence for a product that was ready for one long before the brand was.</p>
     </div>
     <div class="result-block reveal d2">
       <span class="result-num">Now</span>
