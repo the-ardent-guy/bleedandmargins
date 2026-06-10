@@ -33,12 +33,23 @@ body:has(a:hover) .cursor-ring{width:48px;height:48px;opacity:1;}
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:stretch;border-bottom:1px solid var(--ink);background:var(--paper);height:64px;}
 .nav-wordmark{text-decoration:none;display:flex;align-items:center;padding:0 24px;border-right:1px solid var(--ink);min-width:140px;}
 .nav-logo-img{height:34px;width:auto;display:block;}
-.nav-back{display:flex;align-items:center;padding:0 28px;font-family:'NHG Display',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--ink);opacity:0.45;transition:opacity .15s;border-right:1px solid var(--ink);}
-.nav-back:hover{opacity:1;}
-.nav-visit{display:flex;align-items:center;padding:0 28px;font-family:'NHG Display',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-right:1px solid var(--ink);transition:background .15s,color .15s;white-space:nowrap;}
-.nav-visit:hover{background:var(--dim);}
-.nav-cta{margin-left:auto;display:flex;align-items:center;padding:0 28px;border-left:1px solid var(--ink);font-family:'NHG Display',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;color:var(--ink);transition:background .15s,color .15s;white-space:nowrap;}
-.nav-cta:hover{background:var(--ink);color:var(--paper);}
+.nav-hamburger{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:0 20px;height:100%;background:none;border:none;border-left:1px solid var(--ink);cursor:pointer;margin-left:auto;}
+.nav-hamburger span{display:block;width:18px;height:1.5px;background:var(--ink);transition:transform .25s,opacity .25s;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+.nav-drawer{position:fixed;top:64px;left:0;right:0;background:var(--paper);z-index:999;border-bottom:1px solid var(--ink);transform:translateY(calc(-100% - 68px));visibility:hidden;transition:transform .35s cubic-bezier(.4,0,.2,1),visibility 0s .35s;pointer-events:none;}
+.nav-drawer.open{transform:translateY(0);visibility:visible;transition:transform .35s cubic-bezier(.4,0,.2,1),visibility 0s;pointer-events:auto;}
+.nav-drawer ul{list-style:none;padding:0;margin:0;}
+.nav-drawer ul li{border-bottom:1px solid var(--ink);}
+.nav-drawer ul li a{display:block;padding:20px 28px;font-family:"NHG Text",sans-serif;font-weight:400;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;color:var(--ink);}
+.nav-drawer ul li a:hover{background:rgba(26,21,16,0.04);}
+
+
+
+
+
+
 .cs-hero{margin-top:64px;min-height:92vh;background:linear-gradient(160deg,#1a0e06,#2d1a0a,#3d2410);display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--ink);}
 .cs-hero-left{padding:80px 72px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid rgba(247,242,232,0.08);}
 .cs-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(247,242,232,0.3);margin-bottom:32px;}
@@ -127,7 +138,7 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
 .d1{transition-delay:.06s;}.d2{transition-delay:.12s;}.d3{transition-delay:.18s;}.d4{transition-delay:.24s;}
 @media(max-width:900px){
   .cs-hero,.brief-insight,.deliverable,.next-project{grid-template-columns:1fr;}
-  .deliverable.flip .del-visual{order:0;}
+  .deliverable.flip .del-visual{order:-1;}
   .del-visual{min-height:300px;}
   .field-finds{grid-template-columns:1fr;}
   .field-find{border-right:none;border-bottom:1px solid var(--ink);}
@@ -138,12 +149,12 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
   footer{grid-template-columns:1fr;}
   .footer-col{border-right:none;border-bottom:1px solid rgba(247,242,232,0.1);}
 }
-@media(max-width:768px){
+@media(max-width:768px){.nav-drawer{top:48px;transform:translateY(calc(-100% - 52px));}
   nav{height:52px;}
   .nav-wordmark{min-width:auto;padding:0 16px;}
-  .nav-back{padding:0 16px;font-size:11px;}
-  .nav-visit{display:none;}
-  .nav-cta{padding:0 16px;font-size:11px;}
+  
+  
+  
   .cs-hero{margin-top:52px;}
   .cs-hero-left,.cs-hero-right{padding:48px 24px;}
   .cs-title{font-size:clamp(64px,16vw,100px);}
@@ -161,9 +172,9 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
   .col-heading{font-size:clamp(24px,7vw,36px);}
   .insight-pull{font-size:clamp(24px,7vw,36px);}
   .deliverable{grid-template-columns:1fr;}
-  .deliverable.flip .del-visual{order:0;}
+  .deliverable.flip .del-visual{order:-1;}
   .del-visual{min-height:60vw;}
-  .del-info{padding:40px 40px 40px 24px;}
+  .del-info{padding:40px 40px 40px 24px;}.del-visual img.contain{width:100%;}
   .del-title{font-size:clamp(28px,8vw,44px);}
   .del-desc{font-size:15px;}
   .del-vborder{border-right:none!important;border-left:none!important;border-bottom:1px solid var(--border);}
@@ -205,12 +216,20 @@ img,svg{max-width:100%;height:auto;}
 
 <nav>
   <a href="index.html" class="nav-wordmark">
-    <img src="bm-logo-dark.png" alt="Bleed &amp; Margins" class="nav-logo-img">
+    <img src="bm-logo-light.png" alt="Bleed &amp; Margins" class="nav-logo-img">
   </a>
-  <a href="work.html" class="nav-back">← Work</a>
-  <a href="https://www.koodaikind.com" class="nav-visit" target="_blank" rel="noopener noreferrer">Visit Site ↗</a>
-  <a href="index.html#contact" class="nav-cta">Get in Touch</a>
+  <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-drawer" id="navDrawer" aria-hidden="true">
+  <ul>
+    <li><a href="work.html">Work</a></li>
+    <li><a href="index.html#approach">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="index.html#contact">Start a Project</a></li>
+  </ul>
+</div>
 
 <div class="cs-hero">
   <div class="cs-hero-left">
@@ -438,6 +457,27 @@ if('ontouchstart' in window||navigator.maxTouchPoints>0){
   if(ring)ring.style.display='none';
   document.body.style.cursor='auto';
 }
+
+// Hamburger menu
+(function(){
+  var btn=document.querySelector(".nav-hamburger");
+  var drawer=document.getElementById("navDrawer");
+  if(!btn||!drawer) return;
+  btn.addEventListener("click",function(){
+    var open=btn.classList.toggle("open");
+    drawer.classList.toggle("open",open);
+    btn.setAttribute("aria-expanded",open);
+    drawer.setAttribute("aria-hidden",!open);
+  });
+  drawer.querySelectorAll("a").forEach(function(a){
+    a.addEventListener("click",function(){
+      btn.classList.remove("open");
+      drawer.classList.remove("open");
+      btn.setAttribute("aria-expanded","false");
+      drawer.setAttribute("aria-hidden","true");
+    });
+  });
+})();
 </script>
 </body>
 </html>

@@ -55,12 +55,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:st
 .nav-wordmark{text-decoration:none;display:flex;flex-direction:column;justify-content:center;line-height:1;gap:0;padding:0 24px;border-right:1px solid var(--ink);min-width:140px;}
 .nav-wordmark .wm-top{font-family:'NHG Text',sans-serif;font-size:18px;color:var(--ink);line-height:1.05;}
 .nav-wordmark .wm-bot{font-family:'NHG Display',sans-serif;font-weight:500;font-size:13px;color:var(--ink);letter-spacing:0.22em;text-transform:uppercase;line-height:1;}.nav-logo-img{height:34px;width:auto;display:block;}
-.nav-back{display:flex;align-items:center;padding:0 28px;font-family:'NHG Display',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--ink);opacity:0.45;transition:opacity .15s;border-right:1px solid var(--ink);}
-.nav-back:hover{opacity:1;}
-.nav-visit{display:flex;align-items:center;padding:0 28px;font-family:'NHG Display',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-right:1px solid var(--ink);transition:background .15s,color .15s;white-space:nowrap;}
-.nav-visit:hover{background:var(--dim);}
-.nav-cta{margin-left:auto;display:flex;align-items:center;padding:0 28px;border-left:1px solid var(--ink);font-family:'NHG Display',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;color:var(--ink);transition:background .15s,color .15s;white-space:nowrap;}
-.nav-cta:hover{background:var(--ink);color:var(--paper);}
+.nav-hamburger{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:0 20px;height:100%;background:none;border:none;border-left:1px solid var(--ink);cursor:pointer;margin-left:auto;}
+.nav-hamburger span{display:block;width:18px;height:1.5px;background:var(--ink);transition:transform .25s,opacity .25s;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+.nav-drawer{position:fixed;top:64px;left:0;right:0;background:var(--paper);z-index:999;border-bottom:1px solid var(--ink);transform:translateY(calc(-100% - 68px));visibility:hidden;transition:transform .35s cubic-bezier(.4,0,.2,1),visibility 0s .35s;pointer-events:none;}
+.nav-drawer.open{transform:translateY(0);visibility:visible;transition:transform .35s cubic-bezier(.4,0,.2,1),visibility 0s;pointer-events:auto;}
+.nav-drawer ul{list-style:none;padding:0;margin:0;}
+.nav-drawer ul li{border-bottom:1px solid var(--ink);}
+.nav-drawer ul li a{display:block;padding:20px 28px;font-family:"NHG Text",sans-serif;font-weight:400;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;color:var(--ink);}
+.nav-drawer ul li a:hover{background:rgba(26,21,16,0.04);}
+
+
+
+
+
+
 
 /* HERO — stone gradient for Sintero */
 .cs-hero{
@@ -218,7 +229,7 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
 /* RESPONSIVE */
 @media(max-width:900px){
   .cs-hero,.brief-insight,.deliverable,.next-project{grid-template-columns:1fr;}
-  .deliverable.flip .del-visual{order:0;}
+  .deliverable.flip .del-visual{order:-1;}
   .del-visual{min-height:300px;}
   .field-finds{grid-template-columns:1fr;}
   .field-find{border-right:none;border-bottom:1px solid var(--ink);}
@@ -229,7 +240,7 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
   footer{grid-template-columns:1fr;}
   .footer-col{border-right:none;border-bottom:1px solid rgba(247,242,232,0.1);}
 }
-@media(max-width:768px){
+@media(max-width:768px){.nav-drawer{top:48px;transform:translateY(calc(-100% - 52px));}
   nav { height: 52px; }
   .nav-wordmark { min-width: auto; padding: 0 16px; }
   .nav-visit { display: none; }
@@ -297,12 +308,20 @@ img, svg { max-width: 100%; height: auto; }
 
 <nav>
   <a href="index.html" class="nav-wordmark">
-    <img src="bm-logo-dark.png" alt="Bleed &amp; Margins" class="nav-logo-img">
+    <img src="bm-logo-light.png" alt="Bleed &amp; Margins" class="nav-logo-img">
   </a>
-  <a href="work.html" class="nav-back">← Work</a>
-  <a href="https://www.sintero.in" class="nav-visit" target="_blank" rel="noopener noreferrer">Visit Site ↗</a>
-  <a href="index.html#contact" class="nav-cta">Start a Project</a>
+  <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-drawer" id="navDrawer" aria-hidden="true">
+  <ul>
+    <li><a href="work.html">Work</a></li>
+    <li><a href="index.html#approach">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="index.html#contact">Start a Project</a></li>
+  </ul>
+</div>
 
 <!-- HERO -->
 <div class="cs-hero">
@@ -540,6 +559,27 @@ if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
   if (ring) ring.style.display = 'none';
   document.body.style.cursor = 'auto';
 }
+
+// Hamburger menu
+(function(){
+  var btn=document.querySelector(".nav-hamburger");
+  var drawer=document.getElementById("navDrawer");
+  if(!btn||!drawer) return;
+  btn.addEventListener("click",function(){
+    var open=btn.classList.toggle("open");
+    drawer.classList.toggle("open",open);
+    btn.setAttribute("aria-expanded",open);
+    drawer.setAttribute("aria-hidden",!open);
+  });
+  drawer.querySelectorAll("a").forEach(function(a){
+    a.addEventListener("click",function(){
+      btn.classList.remove("open");
+      drawer.classList.remove("open");
+      btn.setAttribute("aria-expanded","false");
+      drawer.setAttribute("aria-hidden","true");
+    });
+  });
+})();
 </script>
 </body>
 </html>
