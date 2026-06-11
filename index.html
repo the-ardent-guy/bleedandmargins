@@ -399,6 +399,7 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
   .proj-title { font-size: clamp(32px, 9vw, 52px); }
   .work-header-row { padding: 48px 24px 32px; flex-direction: column; gap: 12px; }
   .work-header-row h2 { font-size: clamp(40px, 11vw, 64px); }
+  .wh-right { align-items: flex-start; }
   .filter-bar { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
   .filter-btn { white-space: nowrap; flex-shrink: 0; }
 }
@@ -623,7 +624,7 @@ pre, code { overflow-x: auto; }
 }
 @media(max-width:768px){
   .engagement{grid-template-columns:1fr;padding:40px 24px;}
-  .eng-num{font-size:40px;margin-bottom:8px;}
+  .eng-num{display:none;}
   .eng-main{padding:0;}
   .eng-detail{padding-top:16px;}
   .eng-footer{padding:40px 24px;}
@@ -632,7 +633,7 @@ pre, code { overflow-x: auto; }
 /* ══ HERO RESPONSIVE OVERRIDES ══ */
 @media(max-width:768px){
   #hero{height:100svh;min-height:520px;}
-  .hero-overlay{padding:68px 24px 48px;}
+  .hero-overlay{padding:148px 24px 48px;}
   .hero-hl{font-size:clamp(36px,10vw,56px);}
   .hero-copy{margin-bottom:22vh;}
   .hero-slide-caption{bottom:80px;left:24px;max-width:calc(100% - 48px);}
@@ -1034,7 +1035,6 @@ nav.scrolled .nav-hamburger{border-left-color:var(--ink);}
   <div class="contact-header">
     <h2 class="reveal">Let's make<br/>something<br/><em><span class="hl" style="color:var(--ink);">worth noticing.</span></em></h2>
   </div>
-  <div style="padding:0 56px 40px;border-bottom:1px solid var(--ink);"><p style="font-family:'NHG Text',sans-serif;font-style:normal;font-size:clamp(15px,1.3vw,18px);color:var(--muted);line-height:1.65;" class="reveal">No account managers. No re-explaining the brief. No retainer ramp. Just the work, scoped tight, delivered fast.</p></div>
   <div class="contact-body">
     <div class="contact-info reveal">
       <div class="contact-row"><span class="contact-label">Email</span><a href="mailto:bleedandmargins@gmail.com" class="contact-val">bleedandmargins@gmail.com</a></div>
@@ -1073,8 +1073,8 @@ nav.scrolled .nav-hamburger{border-left-color:var(--ink);}
     <p class="footer-copy">© 2026 Bleed & Margins.<br/>All rights reserved.</p>
   </div>
   <div class="footer-col">
-    <p class="footer-label">Navigation</p>
     <ul class="footer-links">
+      <li><a href="#services">Services</a></li>
       <li><a href="work.html">Work</a></li>
       <li><a href="#approach">About</a></li>
       <li><a href="#contact">Contact</a></li>
