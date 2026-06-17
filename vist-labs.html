@@ -300,11 +300,12 @@ img, svg { max-width: 100%; height: auto; }
 pre, code { overflow-x: auto; }
 
 /* LUXURY CALCULUS */
-.lux-calc-section{background:var(--ink);border-bottom:1px solid var(--ink);}
-.lux-calc-inner{padding:72px;max-width:800px;}
-.lux-calc-inner .col-label{color:rgba(247,242,232,0.35);}
-.lux-calc-inner .col-body{color:rgba(247,242,232,0.65);}
-@media(max-width:768px){.lux-calc-inner{padding:48px 24px;}}
+.lux-calc-section{background:var(--ink);display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(247,242,232,0.08);}
+.lux-left{padding:72px;border-right:1px solid rgba(247,242,232,0.08);}
+.lux-right{padding:72px;}
+.lux-left .col-label{color:rgba(247,242,232,0.35);}
+.lux-right .col-body{color:rgba(247,242,232,0.65);}
+@media(max-width:768px){.lux-calc-section{grid-template-columns:1fr;}.lux-left{padding:48px 24px;border-right:none;border-bottom:1px solid rgba(247,242,232,0.08);}.lux-right{padding:48px 24px;}}
 </style>
 </head>
 <body>
@@ -426,9 +427,11 @@ pre, code { overflow-x: auto; }
 
 <!-- THE LUXURY CALCULUS -->
 <section class="lux-calc-section">
-  <div class="lux-calc-inner reveal">
+  <div class="lux-left reveal">
     <span class="col-label">The Luxury Calculus</span>
     <h3 class="col-heading" style="color:var(--paper);">Restraint as the trust signal.</h3>
+  </div>
+  <div class="lux-right reveal d1">
     <div class="col-body">
       <p>Cannabis B2B design defaults to one of two modes: the clinical sterility of pharmaceutical supply chains, or the neon-and-leaf visual language borrowed from dispensary consumer branding. Both are conventions a B2B buyer reads instantly. Both are wrong for this brief.</p>
       <p>Clinical sterility signals a company built for scale and cost-efficiency, not craft. Dispensary consumer branding signals that the company's primary audience is end consumers, not the operators and cultivation managers actually buying the product. Neither says what a dispensary buyer making a compliance-sensitive purchasing decision needs to hear: that this company is precise, evidence-led, and built for their workflow.</p>

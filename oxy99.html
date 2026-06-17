@@ -211,11 +211,12 @@ footer{background:var(--ink);display:grid;grid-template-columns:1fr 1fr 1fr;}
 img,svg{max-width:100%;height:auto;}
 
 /* LUXURY CALCULUS */
-.lux-calc-section{background:#000;border-bottom:1px solid rgba(247,242,232,0.08);}
-.lux-calc-inner{padding:72px;max-width:800px;}
-.lux-calc-inner .col-label{color:rgba(247,242,232,0.3);}
-.lux-calc-inner .col-body{color:rgba(247,242,232,0.6);}
-@media(max-width:768px){.lux-calc-inner{padding:48px 24px;}}
+.lux-calc-section{background:#000;display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(247,242,232,0.08);}
+.lux-left{padding:72px;border-right:1px solid rgba(247,242,232,0.08);}
+.lux-right{padding:72px;}
+.lux-left .col-label{color:rgba(247,242,232,0.3);}
+.lux-right .col-body{color:rgba(247,242,232,0.6);}
+@media(max-width:768px){.lux-calc-section{grid-template-columns:1fr;}.lux-left{padding:48px 24px;border-right:none;border-bottom:1px solid rgba(247,242,232,0.08);}.lux-right{padding:48px 24px;}}
 </style>
 </head>
 <body>
@@ -328,9 +329,11 @@ img,svg{max-width:100%;height:auto;}
 
 <!-- THE LUXURY CALCULUS -->
 <section class="lux-calc-section">
-  <div class="lux-calc-inner reveal">
+  <div class="lux-left reveal">
     <span class="col-label">The Luxury Calculus</span>
     <h3 class="col-heading" style="color:var(--paper);">Neither fear nor sterility.</h3>
+  </div>
+  <div class="lux-right reveal d1">
     <div class="col-body">
       <p>Health-adjacent products sit between two defaults: fear-based urgency marketing that leads with crisis framing, and cold clinical sterility that reads as a hospital pamphlet. Portable oxygen in particular sits in a category primed for the former - most competitors in this space lead with emergency scenarios and urgency copy.</p>
       <p>Oxy99 had 30 years of manufacturing credibility and process technology most competitors in the category couldn't claim. Leaning on fear marketing would have put that credibility in the service of the weakest trust signal available - the same framing used by brands with nothing substantive to stand on. It would have positioned a market leader like a challenger trying to manufacture urgency it didn't need.</p>
